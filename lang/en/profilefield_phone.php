@@ -24,5 +24,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-
+$string['associatefield'] = 'Associate with profile field';
+$string['fieldalreadyassociated'] = 'This field already associated with {$a} field';
+$string['ismobile'] = 'Is mobile';
 $string['pluginname'] = 'Phone';

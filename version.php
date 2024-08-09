@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'profilefield_phone';
-$plugin->release = '0.1.0';
+$plugin->release = '1.0.0';
 $plugin->version = 2024080400;
 $plugin->requires = 2022112800;
-$plugin->maturity = MATURITY_BETA;
+$plugin->maturity = MATURITY_STABLE;

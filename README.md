@@ -1,8 +1,10 @@
 # Phone #
 
-TODO Describe the plugin shortly here.
+Custom profile field for phones.
 
-TODO Provide more detailed description here.
+Add a custom profile field for phone which validate the phone prefix and number length according to the country.
+Also it could be associated with one of the user's phone fields phone1 or phone2.
+Can be added to the identity provider list.
 
 ## Installing via uploaded ZIP file ##
 
