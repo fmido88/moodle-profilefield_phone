@@ -56,16 +56,15 @@ class phone {
             'placeholder'       => 'country code',
         ];
         $group = [
-            $mform->createElement('autocomplete',
-                                  'code', '',
-                                  self::get_country_codes_options($fullstring),
-                                  $options, ['size' => 10]),
+            $mform->createElement('select', 'code', '', self::get_country_codes_options($fullstring),
+                                  $options),
             $mform->createElement('text', 'number', '', ['size' => 20, 'placeholder' => $visiblename]),
         ];
 
         if ($PAGE->theme->get_rtl_mode()) {
             $group = array_reverse($group);
         }
+
         $mform->addGroup($group, $element, $visiblename);
         $mform->setType($element . '[number]', PARAM_INT);
 
@@ -293,17 +292,26 @@ class phone {
 
         foreach (self::data() as $data) {
             if ($code === $data[$codekey] && in_array(strlen($number), $data['phone_number_lengths'], true)) {
+                $valid = true;
                 if ($ismobile) {
+                    $valid = false;
                     foreach ($data['mobile_begin_with'] as $prefix) {
                         if (substr($number, 0, strlen($prefix)) === $prefix) {
                             if (!$returndata) {
                                 return true;
                             }
-                            $data['number'] = $number;
-
-                            return $data;
+                            $valid = true;
+                            break;
                         }
                     }
+                }
+
+                if ($valid) {
+                    if ($returndata) {
+                        $data['number'] = $number;
+                        return $data;
+                    }
+                    return true;
                 }
             }
         }

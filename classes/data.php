@@ -156,7 +156,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '5', '7', '9'],
             'phone_number_lengths' => [8],
         ],
-        // http =>//www.howtocallabroad.com/results.php?callfrom=united_states&callto=american_samoa
+        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=american_samoa
         [
             'alpha2'               => 'AS',
             'alpha3'               => 'ASM',
@@ -167,7 +167,7 @@ class data {
         ],
         // ['alpha2'               => "AQ", 'alpha3'               => "ATA", 'country_code'         => "672", 'country_name'         => "Antarctica", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
         // ['alpha2'               => "TF", 'alpha3'               => "ATF", 'country_code'         => "", 'country_name'         => "French Southern Territories", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
-        // http =>//www.howtocallabroad.com/results.php?callfrom=united_states&callto=antigua_barbuda
+        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=antigua_barbuda
         [
             'alpha2'               => 'AG',
             'alpha3'               => 'ATG',
@@ -289,7 +289,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [7],
         ],
-        // http =>//www.howtocallabroad.com/results.php?callfrom=united_states&callto=bermuda
+        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=bermuda
         [
             'alpha2'               => 'BM',
             'alpha3'               => 'BMU',
@@ -365,9 +365,9 @@ class data {
             'phone_number_lengths' => [8],
         ],
 
-        // http =>//www.howtocallabroad.com/canada/
-        // http =>//areacode.org/
-        // http =>//countrycode.org/canada
+        // https://www.howtocallabroad.com/canada/
+        // https://areacode.org/
+        // https://countrycode.org/canada
         [
             'alpha2'               => 'CA',
             'alpha3'               => 'CAN',
@@ -1717,7 +1717,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        // http =>//www.howtocallabroad.com/turks-caicos/
+        // https://www.howtocallabroad.com/turks-caicos/
         [
             'alpha2'               => 'TC',
             'alpha3'               => 'TCA',
