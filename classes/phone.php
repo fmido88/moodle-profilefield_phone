@@ -65,7 +65,7 @@ class phone {
             $group = array_reverse($group);
         }
 
-        $mform->addGroup($group, $element, $visiblename);
+        $mform->addGroup($group, $element, $visiblename, null, true, ['class' => 'profile_field_phone']);
         $mform->setType($element . '[number]', PARAM_INT);
 
         if ($required) {
