@@ -224,7 +224,6 @@ class profile_field_phone extends profile_field_base {
      * @param stdClass $usernew data coming from the form
      */
     public function edit_save_data($usernew) {
-        global $DB;
         parent::edit_save_data($usernew);
 
         // Save associated field.
