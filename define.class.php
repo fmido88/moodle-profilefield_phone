@@ -63,10 +63,12 @@ class profile_define_phone extends profile_define_base {
             $sql = "SELECT *
                     FROM {user_info_field}
                     WHERE $search = :param4
-                      AND datatype = :datatype";
+                      AND datatype = :datatype
+                      AND shortname != :shortname";
             $params = [
                 'param4'    => $data['param4'],
                 'datatype'  => 'phone',
+                'shortname' => $data['shortname'],
             ];
             if ($record = $DB->get_record_sql($sql, $params)) {
                 $errors['param4'] = get_string('fieldalreadyassociated', 'profilefield_phone', $record->shortname);
