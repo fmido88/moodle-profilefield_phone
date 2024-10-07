@@ -65,7 +65,7 @@ class phone {
             $group = array_reverse($group);
         }
 
-        $mform->addGroup($group, $element, $visiblename, null, true, ['class' => 'profile_field_phone']);
+        $mform->addGroup($group, $element, $visiblename, null, true, ['class' => 'profilefield_phone']);
         $mform->setType($element . '[number]', PARAM_INT);
 
         if ($required) {
@@ -91,19 +91,6 @@ class phone {
                 $mform->setDefault($element . '[code]', $defaultcountry);
             }
         }
-
-        $style = "[data-groupname=\"$element\"] .d-flex.flex-wrap.align-items-center {
-            align-items: flex-end !important;
-        }
-        [data-groupname=\"$element\"] .fitem:has([data-fieldtype=\"autocomplete\"]) {
-            width: 140px;
-        }";
-        $style = \core_minify::css($style);
-        $tag = \html_writer::tag('style', $style);
-
-        $tag  = addslashes_js($tag);
-        $code = "document.head.insertAdjacentHTML('beforeend', '$tag');";
-        $PAGE->requires->js_init_code($code, true);
     }
     /**
      * Summary of set_default_phone_form

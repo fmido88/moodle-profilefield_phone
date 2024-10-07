@@ -1,0 +1,8 @@
+.profilefield_phone {
+    .d-flex.flex-wrap.align-items-center {
+        align-items: flex-end !important; // scss-lint:disable ImportantRule
+    }
+    .fitem:has([data-fieldtype=\"autocomplete\"]) {
+        width: 140px;
+    }
+}
