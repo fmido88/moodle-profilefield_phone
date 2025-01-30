@@ -1,0 +1,48 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template profilefield_phone/phone-element
+
+    TODO describe template phone-element
+
+    Example context (json):
+    {
+    }
+}}
+<div class="select-box">
+    <div class="selected-option">
+        <div>
+            <span class="iconify" {{#defaultcode}}data-icon="flag:{{defaultcode}}-4x3"{{/defaultcode}}></span>
+            <strong>+{{defaultpre}}</strong>
+        </div>
+        <input type="text" name="{{elementname}}" placeholder="{{label}}">
+    </div>
+    <div class="options">
+        <input type="text" class="search-box" placeholder="{{#str}}searchbycounrty, profilefield_phone{{/str}}">
+        <ol>
+            {{#options}}
+            <li class="option">
+                <div>
+                    <span class="iconify" data-icon="flag:{{code}}-4x3"></span>
+                    <span class="country-name">{{name}}</span>
+                </div>
+                <strong>+{{pre}}</strong>
+            </li> 
+            {{/options}}
+        </ol>
+    </div>
+</div>
