@@ -19,7 +19,7 @@ namespace profilefield_phone;
 // phpcs:ignoreFile
 
 /**
- * Class data
+ * Class data.
  *
  * @package    profilefield_phone
  * @copyright  2024 Mohammad Farouk <phun.for.physics@gmail.com>
@@ -35,11 +35,11 @@ class data {
      */
     public const PHONE_DATA = [
         [
-            'alpha2'               => 'US',
-            'alpha3'               => 'USA',
-            'country_code'         => '1',
-            'country_name'         => 'United States',
-            'mobile_begin_with'    => ['201', '202', '203', '205', '206', '207', '208', '209', '210', '212', '213', '214', '215',
+            'alpha2'            => 'US',
+            'alpha3'            => 'USA',
+            'country_code'      => '1',
+            'country_name'      => 'United States',
+            'mobile_begin_with' => ['201', '202', '203', '205', '206', '207', '208', '209', '210', '212', '213', '214', '215',
                 '216', '217', '218', '219', '220', '223', '224', '225', '227', '228', '229', '231', '234', '239', '240',
                 '248', '251', '252', '253', '254', '256', '260', '262', '267', '269', '270', '272', '274', '276', '278',
                 '281', '283', '301', '302', '303', '304', '305', '307', '308', '309', '310', '312', '313', '314', '315',
@@ -51,7 +51,7 @@ class data {
                 '515', '516', '517', '518', '520', '530', '531', '534', '539', '540', '541', '551', '557', '559', '561',
                 '562', '563', '564', '567', '570', '571', '572', '573', '574', '575', '580', '582', '585', '586', '601', '602',
                 '603', '605', '606', '607', '608', '609', '610', '612', '614', '615', '616', '617', '618', '619', '620',
-                '623', '626', '627', '628', '629', '630', '631', '636', '640', '641', '646', '650', '651', '656', '657', '659', '660',
+                '623', '626', '627', '628', '629', '630', '631', '636', '640', '641', '645', '646', '650', '651', '656', '657', '659', '660',
                 '661', '662', '667', '669', '678', '679', '680', '681', '682', '689', '701', '702', '703', '704', '706', '707',
                 '708', '712', '713', '714', '715', '716', '717', '718', '719', '720', '724', '725', '726', '727', '728', '730', '731',
                 '732', '734', '737', '740', '743', '747', '752', '754', '757', '760', '762', '763', '764', '765', '769', '770', '771',
@@ -66,7 +66,7 @@ class data {
             ],
             'phone_number_lengths' => [10],
         ],
-        // https =>//en.wikipedia.org/wiki/Telephone_numbers_in_Aruba
+
         [
             'alpha2'               => 'AW',
             'alpha3'               => 'ABW',
@@ -123,7 +123,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '6'],
             'phone_number_lengths' => [6],
         ],
-        // https =>//en.wikipedia.org/wiki/Telephone_numbers_in_Cura%C3%A7ao_and_the_Caribbean_Netherlands
+
         [
             'alpha2'               => 'BQ',
             'alpha3'               => 'BES',
@@ -145,7 +145,7 @@ class data {
             'alpha3'               => 'ARG',
             'country_code'         => '54',
             'country_name'         => 'Argentina',
-            'mobile_begin_with'    => ['1', '2', '3'], // Same for mobile and landlines
+            'mobile_begin_with'    => ['1', '2', '3'],
             'phone_number_lengths' => [8, 9, 10, 11, 12],
         ],
         [
@@ -156,7 +156,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '5', '7', '9'],
             'phone_number_lengths' => [8],
         ],
-        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=american_samoa
+
         [
             'alpha2'               => 'AS',
             'alpha3'               => 'ASM',
@@ -165,9 +165,7 @@ class data {
             'mobile_begin_with'    => ['684733', '684258'],
             'phone_number_lengths' => [10],
         ],
-        // ['alpha2'               => "AQ", 'alpha3'               => "ATA", 'country_code'         => "672", 'country_name'         => "Antarctica", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
-        // ['alpha2'               => "TF", 'alpha3'               => "ATF", 'country_code'         => "", 'country_name'         => "French Southern Territories", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
-        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=antigua_barbuda
+
         [
             'alpha2'               => 'AG',
             'alpha3'               => 'ATG',
@@ -205,7 +203,7 @@ class data {
             'alpha3'               => 'BDI',
             'country_code'         => '257',
             'country_name'         => 'Burundi',
-            'mobile_begin_with'    => ['7', '29'],
+            'mobile_begin_with'    => ['71', '72', '75', '76', '77', '79', '29', '61', '68', '69'],
             'phone_number_lengths' => [8],
         ],
         [
@@ -270,9 +268,9 @@ class data {
             'country_code'         => '387',
             'country_name'         => 'Bosnia and Herzegovina',
             'mobile_begin_with'    => ['6'],
-            'phone_number_lengths' => [8],
+            'phone_number_lengths' => [8, 9],
         ],
-        // ['alpha2'               => "BL", 'alpha3'               => "BLM", 'country_code'         => "590", 'country_name'         => "Saint Barthélemy", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'BY',
             'alpha3'               => 'BLR',
@@ -289,7 +287,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [7],
         ],
-        // https://www.howtocallabroad.com/results.php?callfrom=united_states&callto=bermuda
+
         [
             'alpha2'               => 'BM',
             'alpha3'               => 'BMU',
@@ -307,11 +305,11 @@ class data {
             'phone_number_lengths' => [8],
         ],
         [
-            'alpha2'               => 'BR',
-            'alpha3'               => 'BRA',
-            'country_code'         => '55',
-            'country_name'         => 'Brazil',
-            'mobile_begin_with'    => [
+            'alpha2'            => 'BR',
+            'alpha3'            => 'BRA',
+            'country_code'      => '55',
+            'country_name'      => 'Brazil',
+            'mobile_begin_with' => [
                 '119', '129', '139', '149', '159', '169', '179', '189', '199', '219', '229', '249', '279', '289',
                 '319', '329', '339', '349', '359', '379', '389',
                 '419', '429', '439', '449', '459', '469', '479', '489', '499',
@@ -347,7 +345,7 @@ class data {
             'mobile_begin_with'    => ['17'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "BV", 'alpha3'               => "BVT", 'country_code'         => "", 'country_name'         => "Bouvet Island", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'BW',
             'alpha3'               => 'BWA',
@@ -365,15 +363,12 @@ class data {
             'phone_number_lengths' => [8],
         ],
 
-        // https://www.howtocallabroad.com/canada/
-        // https://areacode.org/
-        // https://countrycode.org/canada
         [
-            'alpha2'               => 'CA',
-            'alpha3'               => 'CAN',
-            'country_code'         => '1',
-            'country_name'         => 'Canada',
-            'mobile_begin_with'    => [
+            'alpha2'            => 'CA',
+            'alpha3'            => 'CAN',
+            'country_code'      => '1',
+            'country_name'      => 'Canada',
+            'mobile_begin_with' => [
                 '204', '226', '236', '249', '250', '263', '289', '306', '343', '354',
                 '365', '367', '368', '403', '416', '418', '431', '437', '438', '450',
                 '468', '474', '506', '514', '519', '548', '579', '581', '584', '587',
@@ -382,7 +377,7 @@ class data {
                 '905', '428', '382'],
             'phone_number_lengths' => [10],
         ],
-        // ['alpha2'               => "CC", 'alpha3'               => "CCK", 'country_code'         => "61", 'country_name'         => "Cocos (Keeling) Islands", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'CH',
             'alpha3'               => 'CHE',
@@ -492,10 +487,10 @@ class data {
             'alpha3'               => 'CUB',
             'country_code'         => '53',
             'country_name'         => 'Cuba',
-            'mobile_begin_with'    => ['5'],
+            'mobile_begin_with'    => ['5', '6'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "CX", 'alpha3'               => "CXR", 'country_code'         => "61", 'country_name'         => "Christmas Island", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'KY',
             'alpha3'               => 'CYM',
@@ -545,11 +540,11 @@ class data {
             'phone_number_lengths' => [10],
         ],
         [
-            'alpha2'               => 'DK',
-            'alpha3'               => 'DNK',
-            'country_code'         => '45',
-            'country_name'         => 'Denmark',
-            'mobile_begin_with'    => [
+            'alpha2'            => 'DK',
+            'alpha3'            => 'DNK',
+            'country_code'      => '45',
+            'country_name'      => 'Denmark',
+            'mobile_begin_with' => [
                 '2', '30', '31', '40', '41', '42', '50', '51', '52', '53', '60', '61', '71', '81', '91', '92', '93',
                 '342', '344', '345', '346', '347', '348', '349', '356', '357', '359', '362',
                 '365', '366', '389', '398', '431', '441', '462', '466', '468', '472', '474',
@@ -601,7 +596,7 @@ class data {
             'mobile_begin_with'    => ['1', '7', '8'],
             'phone_number_lengths' => [7],
         ],
-        // ['alpha2'               => "EH", 'alpha3'               => "ESH", 'country_code'         => "212", 'country_name'         => "Western Sahara", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'ES',
             'alpha3'               => 'ESP',
@@ -623,7 +618,7 @@ class data {
             'alpha3'               => 'ETH',
             'country_code'         => '251',
             'country_name'         => 'Ethiopia',
-            'mobile_begin_with'    => ['9'],
+            'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [9],
         ],
         [
@@ -632,7 +627,7 @@ class data {
             'country_code'         => '358',
             'country_name'         => 'Finland',
             'mobile_begin_with'    => ['4', '5'],
-            'phone_number_lengths' => [9, 10],
+            'phone_number_lengths' => [6, 7, 9, 10],
         ],
         [
             'alpha2'               => 'FJ',
@@ -698,7 +693,7 @@ class data {
             'mobile_begin_with'    => ['5', '7'],
             'phone_number_lengths' => [9],
         ],
-        // ['alpha2'               => "GG", 'alpha3'               => "GGY", 'country_code'         => "44", 'country_name'         => "Guernsey", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'GH',
             'alpha3'               => 'GHA',
@@ -819,7 +814,7 @@ class data {
             'mobile_begin_with'    => ['4', '5', '6', '70', '71', '72', '73', '81', '82', '83', '84', '85', '86', '87', '88', '89', '9'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "HM", 'alpha3'               => "HMD", 'country_code'         => "", 'country_name'         => "Heard and McDonald Islands", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'HN',
             'alpha3'               => 'HND',
@@ -860,7 +855,7 @@ class data {
             'mobile_begin_with'    => ['8'],
             'phone_number_lengths' => [9, 10, 11, 12],
         ],
-        // ['alpha2'               => "IM", 'alpha3'               => "IMN", 'country_code'         => "44", 'country_name'         => "Isle of Man", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'IN',
             'alpha3'               => 'IND',
@@ -869,7 +864,7 @@ class data {
             'mobile_begin_with'    => ['6', '7', '8', '9'],
             'phone_number_lengths' => [10],
         ],
-        // ['alpha2'               => "IO", 'alpha3'               => "IOT", 'country_code'         => "246", 'country_name'         => "British Indian Ocean Territory", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'IE',
             'alpha3'               => 'IRL',
@@ -926,7 +921,7 @@ class data {
             'mobile_begin_with'    => ['876'],
             'phone_number_lengths' => [10],
         ],
-        // ['alpha2'               => "JE", 'alpha3'               => "JEY", 'country_code'         => "44", 'country_name'         => "Jersey", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'JO',
             'alpha3'               => 'JOR',
@@ -999,8 +994,7 @@ class data {
             'mobile_begin_with'    => ['1'],
             'phone_number_lengths' => [9, 10],
         ],
-        // https =>//www.howtocallabroad.com/kosovo/
-        // https =>//en.wikipedia.org/wiki/Telephone_numbers_in_Kosovo
+
         [
             'alpha2'               => 'XK',
             'alpha3'               => 'XKX',
@@ -1113,7 +1107,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "MF", 'alpha3'               => "MAF", 'country_code'         => "590", 'country_name'         => "Saint Martin", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'MA',
             'alpha3'               => 'MAR',
@@ -1351,8 +1345,8 @@ class data {
             'alpha3'               => 'NLD',
             'country_code'         => '31',
             'country_name'         => 'Netherlands',
-            'mobile_begin_with'    => ['6'],
-            'phone_number_lengths' => [9],
+            'mobile_begin_with'    => ['6', '97'],
+            'phone_number_lengths' => [9, 11],
         ],
         [
             'alpha2'               => 'NO',
@@ -1410,7 +1404,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "PN", 'alpha3'               => "PCN", 'country_code'         => "", 'country_name'         => "Pitcairn", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'PE',
             'alpha3'               => 'PER',
@@ -1459,7 +1453,7 @@ class data {
             'mobile_begin_with'    => ['787', '939'],
             'phone_number_lengths' => [10],
         ],
-        // ['alpha2'               => "KP", 'alpha3'               => "PRK", 'country_code'         => "850", 'country_name'         => "Korea, Democratic People's Republic Of", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'PT',
             'alpha3'               => 'PRT',
@@ -1572,7 +1566,7 @@ class data {
             'mobile_begin_with'    => ['8', '9'],
             'phone_number_lengths' => [8],
         ],
-        // ['alpha2'               => "GS", 'alpha3'               => "SGS", 'country_code'         => "500", 'country_name'         => "South Georgia and the South Sandwich Islands", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'SH',
             'alpha3'               => 'SHN',
@@ -1610,7 +1604,7 @@ class data {
             'alpha3'               => 'SLV',
             'country_code'         => '503',
             'country_name'         => 'El Salvador',
-            'mobile_begin_with'    => ['7'],
+            'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
         [
@@ -1717,7 +1711,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        // https://www.howtocallabroad.com/turks-caicos/
+
         [
             'alpha2'               => 'TC',
             'alpha3'               => 'TCA',
@@ -1851,10 +1845,10 @@ class data {
             'alpha3'               => 'UKR',
             'country_code'         => '380',
             'country_name'         => 'Ukraine',
-            'mobile_begin_with'    => ['39', '50', '63', '66', '67', '68', '73', '9'],
+            'mobile_begin_with'    => ['39', '50', '63', '66', '67', '68', '73', '75', '77', '9'],
             'phone_number_lengths' => [9],
         ],
-        // ['alpha2'               => "UM", 'alpha3'               => "UMI", 'country_code'         => "", 'country_name'         => "United States Minor Outlying Islands", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'UY',
             'alpha3'               => 'URY',
@@ -1871,7 +1865,7 @@ class data {
             'mobile_begin_with'    => ['9', '88', '33'],
             'phone_number_lengths' => [9],
         ],
-        // ['alpha2'               => "VA", 'alpha3'               => "VAT", 'country_code'         => "39", 'country_name'         => "Holy See (Vatican City State)", 'mobile_begin_with'    => [], 'phone_number_lengths' => []],
+
         [
             'alpha2'               => 'VC',
             'alpha3'               => 'VCT',
@@ -1969,5 +1963,4 @@ class data {
             'phone_number_lengths' => [9],
         ],
     ];
-
 }
