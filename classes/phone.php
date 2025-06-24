@@ -16,6 +16,8 @@
 
 namespace profilefield_phone;
 
+use function DI\string;
+
 /**
  * Class phone
  *
@@ -269,7 +271,7 @@ class phone {
         $number = self::normalize_number($number);
 
         if (!$usecountry) {
-            $code    = self::normalize_number($code);
+            $code    = (string) self::normalize_number($code);
             $codekey = 'country_code';
         } else if (strlen($code) === 2) {
             $codekey = 'alpha2';
@@ -331,7 +333,7 @@ class phone {
         ];
 
         foreach ($codes as $code) {
-            if ($data = self::validate_number($code, $phone, $ismobile, true)) {
+            if ($data = self::validate_number($code, substr($phone,strlen($code)), $ismobile, true)) {
                 return $data;
             }
         }
