@@ -115,7 +115,7 @@ class profile_field_phone extends profile_field_base {
                                 $this->inputname,
                                 format_string($this->field->name),
                                 $required,
-                                $CFG->country ?? null);
+                                $this->alpha2 ?? $CFG->country ?? null);
     }
 
     /**
