@@ -47,7 +47,7 @@ class phone {
         $required = false,
         $defaultcountry = null,
         $fullstring = false,
-        $forcecountry = true,
+        $forcecountry = false,
     ) {
         global $PAGE;
 
