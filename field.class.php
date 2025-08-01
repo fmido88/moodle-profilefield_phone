@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
+/*
  * Phone profile field.
  *
  * @package     profilefield_phone
@@ -22,43 +22,45 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- use profilefield_phone\phone;
+use profilefield_phone\phone;
+
 /**
- * Class profile_field_phone
+ * Class profile_field_phone.
  *
  * @package     profilefield_phone
  * @copyright   2024 Mohammad Farouk <phun.for.physics@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class profile_field_phone extends profile_field_base {
-
     /**
      * The phone number.
      * @var ?int
      */
     public $number = null;
+
     /**
-     * The numeric country phone code
+     * The numeric country phone code.
      * @var ?int
      */
     public $code = null;
+
     /**
-     * Alpha2 country code
+     * Alpha2 country code.
      * @var ?string
      */
     public $alpha2 = null;
 
     /**
-     * Sets user id and user data for the field
+     * Sets user id and user data for the field.
      *
      * @param mixed $data
-     * @param int $dataformat
+     * @param int   $dataformat
      */
     public function set_user_data($data, $dataformat = 1) {
-        $this->data = $data;
+        $this->data       = $data;
         $this->dataformat = $dataformat;
 
-        $numbers = self::get_data_from_string($data);
+        $numbers      = self::get_data_from_string($data);
         $this->number = $numbers['number'];
         $this->code   = $numbers['code'];
         $this->alpha2 = $numbers['alpha2'];
@@ -68,8 +70,8 @@ class profile_field_phone extends profile_field_base {
 
     /**
      * Explode the stored data as codes and numbers.
-     * @param string $string
-     * @param ?string $defcountry The default country code.
+     * @param  string  $string
+     * @param  ?string $defcountry The default country code.
      * @return array
      */
     protected static function get_data_from_string($string, $defcountry = null) {
@@ -85,17 +87,17 @@ class profile_field_phone extends profile_field_base {
         if (count($numbers) == 2) {
             $data['number'] = $numbers[1];
             $data['alpha2'] = $numbers[0];
-            $data['code'] = phone::get_phone_code_from_country($numbers[0]);
+            $data['code']   = phone::get_phone_code_from_country($numbers[0]);
         } else if (count($numbers) == 1) {
             $data['number'] = $numbers[0];
             $data['alpha2'] = $defcountry ?? $CFG->country ?? '';
+
             if (!empty($data['alpha2'])) {
                 $data['code'] = phone::get_phone_code_from_country($data['alpha2']);
             }
-
         } else if (count($numbers) == 3) {
             $data['number'] = $numbers[2];
-            $data['code'] = $numbers[1];
+            $data['code']   = $numbers[1];
             $data['alpha2'] = str_replace(['(', ')'], '', $numbers[0]);
         }
 
@@ -104,18 +106,20 @@ class profile_field_phone extends profile_field_base {
 
     /**
      * Create the code snippet for this field instance
-     * Overwrites the base class method
+     * Overwrites the base class method.
      * @param \MoodleQuickForm $mform Moodle form instance
      */
     public function edit_field_add($mform) {
         global $CFG, $USER;
         // Check if the field is required.
         $required = !$this->is_locked() && $this->is_required() && ($this->userid == $USER->id || isguestuser());
-        phone::add_phone_to_form($mform,
-                                $this->inputname,
-                                format_string($this->field->name),
-                                $required,
-                                $CFG->country ?? null);
+        phone::add_phone_to_form(
+            $mform,
+            $this->inputname,
+            format_string($this->field->name),
+            $required,
+            $CFG->country ?? null
+        );
     }
 
     /**
@@ -137,13 +141,12 @@ class profile_field_phone extends profile_field_base {
     }
 
     /**
-     * Display the data for this field
-     * @param bool $reset Reset the data or no, required for single construction of the class
-     *                    for multiple users.
+     * Display the data for this field.
+     * @param  bool   $reset Reset the data or no, required for single construction of the class
+     *                       for multiple users.
      * @return string
      */
     public function display_data($reset = true) {
-
         if ($reset && !empty($this->data)) {
             $this->set_user_data($this->data);
         }
@@ -153,7 +156,7 @@ class profile_field_phone extends profile_field_base {
         }
 
         if (!empty($this->code)) {
-            return "+" . $this->code . (int)$this->number;
+            return '+' . $this->code . (int)$this->number;
         }
 
         return $this->number;
@@ -172,17 +175,24 @@ class profile_field_phone extends profile_field_base {
                 'code'   => $this->alpha2 ?? $CFG->country ?? null,
                 'number' => $this->number,
             ];
-            $mform->setDefault($this->inputname, $data);
         } else if (isset($this->field->defaultdata)) {
-            $key = $this->field->defaultdata;
+            $key     = $this->field->defaultdata;
             $default = self::get_data_from_string($key);
+
             if (!empty($default['number'])) {
                 $data = [
                     'code'   => $default['alpha2'],
                     'number' => $default['number'],
                 ];
-                $mform->setDefault($this->inputname,  $data);
             }
+        }
+
+        if (!empty($data)) {
+            $mform->setDefaults([
+                $this->inputname             => $data,
+                "{$this->inputname}[code]"   => $data['code'],
+                "{$this->inputname}[number]" => $data['number'],
+            ]);
         }
     }
 
@@ -192,12 +202,13 @@ class profile_field_phone extends profile_field_base {
      * This should be converted to the respective option string to be saved in database
      * Overwrites base class accessor method.
      *
-     * @param mixed $data The key returned from the select input in the form
-     * @param stdClass $datarecord The object that will be used to save the record
-     * @return mixed Data or null
+     * @param  mixed    $data       The key returned from the select input in the form
+     * @param  stdClass $datarecord The object that will be used to save the record
+     * @return mixed    Data or null
      */
     public function edit_save_data_preprocess($data, $datarecord) {
         global $DB;
+
         if (is_string($data)) {
             return $data;
         }
@@ -216,11 +227,11 @@ class profile_field_phone extends profile_field_base {
         $this->code   = $areacode;
         $this->alpha2 = $data['code'];
 
-        return '(' . $data['code'] . ')-'. $areacode . '-' . $data['number'];
+        return '(' . $data['code'] . ')-' . $areacode . '-' . $data['number'];
     }
 
     /**
-     * Saves the data coming from form
+     * Saves the data coming from form.
      * @param stdClass $usernew data coming from the form
      */
     public function edit_save_data($usernew) {
@@ -235,7 +246,7 @@ class profile_field_phone extends profile_field_base {
 
     /**
      * When passing the user object to the form class for the edit profile page
-     * we should load the key for the saved data
+     * we should load the key for the saved data.
      *
      * Overwrites the base class method.
      *
@@ -270,7 +281,7 @@ class profile_field_phone extends profile_field_base {
     }
 
     /**
-     * Sets the required flag for the field in the form object
+     * Sets the required flag for the field in the form object.
      *
      * @param MoodleQuickForm $mform instance of the moodleform class
      */
@@ -279,10 +290,10 @@ class profile_field_phone extends profile_field_base {
     }
 
     /**
-     * Validate the form field from profile page
+     * Validate the form field from profile page.
      *
-     * @param stdClass $usernew
-     * @return  array  error messages for the form validation
+     * @param  stdClass $usernew
+     * @return array    error messages for the form validation
      */
     public function edit_validate_field($usernew) {
         global $DB;
@@ -291,21 +302,23 @@ class profile_field_phone extends profile_field_base {
 
         $alpha2 = '';
         $number = '';
-        $value = '';
+        $value  = '';
 
         // Get input value.
         if (isset($usernew->{$this->inputname})) {
             if (is_string($usernew->{$this->inputname})) {
-                $data = self::get_data_from_string($usernew->{$this->inputname});
+                $data   = self::get_data_from_string($usernew->{$this->inputname});
                 $alpha2 = $data['alpha2'];
                 $number = $data['number'];
-                $code = $data['code'];
-                $value = "($alpha2)-$code-$number";
+                $code   = $data['code'];
+                $value  = "($alpha2)-$code-$number";
             } else {
                 $number = $usernew->{$this->inputname}['number'] ?? null;
+
                 if (!empty($number)) {
                     $alpha2 = $usernew->{$this->inputname}['code'];
-                    $code = phone::get_phone_code_from_country($alpha2) ?? '';
+                    $code   = phone::get_phone_code_from_country($alpha2) ?? '';
+
                     if (!empty($code)) {
                         $value = "($alpha2)-$code-$number";
                     } else {
@@ -321,6 +334,7 @@ class profile_field_phone extends profile_field_base {
 
         if ($this->is_required() || !empty($number)) {
             $valid = phone::validate_number($alpha2, $number, !empty($this->field->param3), false, true);
+
             if (!$valid) {
                 $errors[$this->inputname] = get_string('profileinvaliddata', 'admin');
             }
@@ -328,23 +342,28 @@ class profile_field_phone extends profile_field_base {
 
         // Check for uniqueness of data if required.
         if ($this->is_unique() && (($value !== '') || $this->is_required())) {
-            $data = $DB->get_records_sql('
+            $data = $DB->get_records_sql(
+                '
                     SELECT id, userid
                       FROM {user_info_data}
                      WHERE fieldid = ?
                        AND ' . $DB->sql_compare_text('data', 255) . ' = ' . $DB->sql_compare_text('?', 255),
-                    [$this->field->id, $value]);
+                [$this->field->id, $value]
+            );
 
             if (!empty($data)) {
                 $existing = false;
+
                 foreach ($data as $v) {
                     if ($v->userid == $usernew->id) {
                         $existing = true;
                         break;
                     }
                 }
+
                 if (!$existing) {
                     $errstr = get_string('valuealreadyused');
+
                     if (isset($errors[$this->inputname])) {
                         $errors[$this->inputname] .= '<br>' . $errstr;
                     } else {
@@ -369,7 +388,7 @@ class profile_field_phone extends profile_field_base {
     }
 
     /**
-     * Check if the field should convert the raw data into user-friendly data when exporting
+     * Check if the field should convert the raw data into user-friendly data when exporting.
      *
      * @return bool
      */
@@ -377,5 +396,3 @@ class profile_field_phone extends profile_field_base {
         return true;
     }
 }
-
-
