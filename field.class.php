@@ -75,7 +75,6 @@ class profile_field_phone extends profile_field_base {
      * @return array
      */
     protected static function get_data_from_string($string, $defcountry = null) {
-        global $CFG;
         $numbers = explode('-', $string);
 
         $data = [
@@ -90,7 +89,7 @@ class profile_field_phone extends profile_field_base {
             $data['code']   = phone::get_phone_code_from_country($numbers[0]);
         } else if (count($numbers) == 1) {
             $data['number'] = $numbers[0];
-            $data['alpha2'] = $defcountry ?? $CFG->country ?? '';
+            $data['alpha2'] = $defcountry ?? self::get_default_country() ?? '';
 
             if (!empty($data['alpha2'])) {
                 $data['code'] = phone::get_phone_code_from_country($data['alpha2']);
@@ -105,12 +104,38 @@ class profile_field_phone extends profile_field_base {
     }
 
     /**
+     * Get the default country code.
+     * @param int $userid The user id to extract the default country from.
+     * @return ?string
+     */
+    protected static function get_default_country($userid = -1) {
+        global $CFG, $USER, $DB;
+
+        if (isloggedin() && ($userid == $USER->id) && !empty($USER->country)) {
+            return $USER->country;
+        }
+
+        if (!empty($userid) && $userid > 0) {
+            $usercounrty = $DB->get_field('user', 'country', ['id' => $userid]);
+            if (!empty($usercounrty)) {
+                return $usercounrty;
+            }
+        }
+
+        if (!empty($CFG->country)) {
+            return $CFG->country;
+        }
+
+        return null;
+    }
+
+    /**
      * Create the code snippet for this field instance
      * Overwrites the base class method.
      * @param \MoodleQuickForm $mform Moodle form instance
      */
     public function edit_field_add($mform) {
-        global $CFG, $USER;
+        global $USER;
         // Check if the field is required.
         $required = !$this->is_locked() && $this->is_required() && ($this->userid == $USER->id || isguestuser());
         phone::add_phone_to_form(
@@ -118,7 +143,7 @@ class profile_field_phone extends profile_field_base {
             $this->inputname,
             format_string($this->field->name),
             $required,
-            $CFG->country ?? null
+            self::get_default_country($this->userid)
         );
     }
 
@@ -172,7 +197,7 @@ class profile_field_phone extends profile_field_base {
 
         if (!empty($this->data)) {
             $data = [
-                'code'   => $this->alpha2 ?? $CFG->country ?? null,
+                'code'   => $this->alpha2 ?? self::get_default_country($this->userid),
                 'number' => $this->number,
             ];
         } else if (isset($this->field->defaultdata)) {
