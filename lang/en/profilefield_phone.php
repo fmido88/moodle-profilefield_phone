@@ -29,3 +29,7 @@ $string['fieldalreadyassociated'] = 'This field already associated with {$a} fie
 $string['ismobile'] = 'Is mobile';
 $string['pluginname'] = 'Phone';
 $string['privacy:metadata'] = 'Profile field phone plugin does not store personal data, nor does it export personal data to an external location.';
+$string['code'] = 'Code';
+$string['countrycode'] = 'Country code';
+$string['invaliddata'] = 'Invalid data';
+$string['invalidnumber'] = 'Invalid number';

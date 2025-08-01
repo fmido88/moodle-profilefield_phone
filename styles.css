@@ -1,8 +1,65 @@
-.profilefield_phone .d-flex.flex-wrap.align-items-center {
-  -webkit-align-items: flex-end !important;
-      -ms-flex-align: end !important;
-          align-items: flex-end !important;
+.profilefield_phone.phone-input-group .fitem:has([data-fieldtype=\"autocomplete\"]) {
+    width: 80px;
 }
-.profilefield_phone .fitem:has([data-fieldtype=\"autocomplete\"]) {
-  width: 140px;
+
+.profilefield_phone.phone-input-group {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 1rem;
+}
+
+.profilefield_phone.phone-input-group .country-select-autocomplete .form-autocomplete-selection {
+    /* stylelint-disable-next-line declaration-no-important */
+    display: none !important;
+}
+
+.profilefield_phone.phone-input-group .form-autocomplete-input {
+    max-width: 80px;
+    margin-right: -10px;
+}
+
+.profilefield_phone.phone-input-group .form-autocomplete-downarrow {
+    right: 0;
+}
+
+.profilefield_phone.phone-input-group .form-autocomplete-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    max-width: 80px;
+    /* stylelint-disable-next-line declaration-no-important */
+    min-width: 60px !important;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.profilefield_phone.phone-input-group .form-autocomplete-input input::placeholder {
+    font-weight: bold;
+    opacity: 1;
+    color: rgb(0, 0, 0);
+}
+
+.profilefield_phone.phone-input-group .phone-number-input {
+    flex-grow: 1;
+}
+
+.profilefield_phone.phone-input-group .phone-number-input input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    max-width: calc(100% - 60px);
+}
+
+.profilefield_phone.phone-input-group .phone-number-input input {
+    max-width: calc(100% - 60px);
+}
+
+/* Width crashes for full-width-labels form. */
+form.full-width-labels .profilefield_phone.phone-input-group .phone-number-input input {
+    max-width: unset;
+}
+
+@media screen and (min-width: 768px) {
+    .profilefield_phone.phone-input-group .phone-number-input input {
+        margin-left: -20px;
+    }
 }

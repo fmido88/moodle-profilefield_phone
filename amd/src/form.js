@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TODO describe module form
+ * Handle the ui of the phone field input.
  *
  * @module     profilefield_phone/form
  * @copyright  2025 Mohammad Farouk <phun.for.physics@gmail.com>
@@ -22,84 +22,61 @@
  */
 
 import $ from 'jquery';
-
-const iconifyScript = "https://code.iconify.design/3/3.1.0/iconify.min.js";
-
 /** @type {JQuery<HTMLElement>} */
-let selectBox;
+let groupContainer;
 /** @type {JQuery<HTMLElement>} */
-let searchBox;
+let hiddenSelect;
 /** @type {JQuery<HTMLElement>} */
-let inputBox;
-/** @type {JQuery<HTMLElement>} */
-let selectedOption;
-/** @type {JQuery<HTMLElement>} */
-let options;
-
+let searchInput;
+/** @type {String} */
+let currentSelectedValue;
+/** @type {NodeJS.Timeout} */
+let searchTimeout;
 /**
- * Action after select an option.
+ * Register the event listeners.
  */
-function selectOption() {
-    const icon = this.querySelector('.iconify').cloneNode(true);
-    const phoneCode = this.querySelector('strong').cloneNode(true);
-
-    selectedOption.innerHTML = '';
-    selectedOption.append(icon, phoneCode);
-
-    inputBox.value = phoneCode.innerText;
-
-    selectBox.removeClass('active');
-    selectedOption.removeClass('active');
-
-    searchBox.value = '';
-    selectBox.find('.hide').forEach(el => el.classList.remove('hide'));
-}
-
-/**
- * Searching for a country.
- */
-function searchCountry() {
-    let searchQuery = searchBox.value.toLowerCase();
-    for (let option of options) {
-        let isMatched = option.querySelector('.country-name').innerText.toLowerCase().includes(searchQuery);
-        option.classList.toggle('hide', !isMatched);
-    }
-}
-
-/**
- *
- * @param {JQuery<HTMLElement>} element
- * @param {String} className
- */
-function toggleClass(element, className) {
-    if (element.hasClass(className)) {
-        element.removeClass(className);
-    } else {
-        element.addClass(className);
-    }
-}
-
-export const init = function(id) {
-    let iconify = document.createElement('script');
-    iconify.src = iconifyScript;
-    $('head').append(iconify);
-
-    let baseFormElement = $('#' + id);
-    if (baseFormElement.length !== 1) {
-        return;
+function register() {
+    currentSelectedValue = hiddenSelect.val();
+    if (currentSelectedValue) {
+        searchInput.attr('placeholder', getPhoneCode(currentSelectedValue));
     }
 
-    selectBox = baseFormElement.find('.options');
-    searchBox = baseFormElement.find('.search-box');
-    inputBox = baseFormElement.find('input[type="tel"]');
-    selectedOption = baseFormElement.find('.selected-option div');
-    options = baseFormElement.find('.option');
-
-    selectedOption.on('click', function() {
-        toggleClass(selectedOption, 'active');
-        toggleClass(selectBox, 'active');
+    hiddenSelect.on('change', function() {
+        currentSelectedValue = $(this).val();
+        let code = getPhoneCode(currentSelectedValue);
+        searchInput.attr('placeholder', code);
     });
+}
 
-    options.on('click', selectOption);
-    searchBox.on('input', searchCountry);
+/**
+ * Get the phone code from the country code.
+ * @param {String} country
+ */
+function getPhoneCode(country) {
+    let text = hiddenSelect.find('option[value="' + country + '"]').text();
+    return text.match(/\+\d+/g).shift();
+}
+
+/**
+ * Identify the search input.
+ */
+function identifySearchInput() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function() {
+        searchInput = groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
+        if (searchInput.length > 0) {
+            register();
+        } else {
+            identifySearchInput();
+        }
+    }, 100);
+}
+
+export const init = function(name) {
+    groupContainer = $('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
+    hiddenSelect = groupContainer.find('select[name="' + name + '[code]"]');
+
+    // Ugly hack to remove flex-wrap class from the group.
+    groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
+    identifySearchInput();
 };

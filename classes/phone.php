@@ -16,8 +16,6 @@
 
 namespace profilefield_phone;
 
-use function DI\string;
-
 /**
  * Class phone
  *
@@ -48,26 +46,29 @@ class phone {
         $visiblename,
         $required = false,
         $defaultcountry = null,
-        $fullstring = false
+        $fullstring = false,
+        $forcecountry = true,
     ) {
         global $PAGE;
+
         $options = [
             'multiple'          => false,
             'noselectionstring' => '',
             'casesensitive'     => false,
-            'placeholder'       => 'country code',
+            'placeholder'       => get_string('code', 'profilefield_phone'),
+            'class'             => 'country-select-autocomplete',
         ];
-        $group = [
-            $mform->createElement('select', 'code', '', self::get_country_codes_options($fullstring),
-                                  $options),
-            $mform->createElement('text', 'number', '', ['size' => 20, 'placeholder' => $visiblename]),
-        ];
+        $autocomplete = $mform->createElement('autocomplete', 'code', '', self::get_country_codes_options($fullstring), $options);
+        $phoneinput = $mform->createElement('text', 'number', '', ['size' => 20, 'placeholder' => $visiblename, 'class' => 'phone-number-input']);
+
+        $group = [$autocomplete, $phoneinput];
 
         if ($PAGE->theme->get_rtl_mode()) {
             $group = array_reverse($group);
         }
 
-        $mform->addGroup($group, $element, $visiblename, null, true, ['class' => 'profilefield_phone']);
+        $classes = 'profilefield_phone phone-input-group';
+        $mform->addGroup($group, $element, $visiblename, null, true, ['class' => $classes]);
         $mform->setType($element . '[number]', PARAM_INT);
 
         if ($required) {
@@ -90,9 +91,17 @@ class phone {
             }
 
             if (strlen($defaultcountry) === 2) {
-                $mform->setDefault($element . '[code]', $defaultcountry);
+                if ($forcecountry) {
+                    $mform->setConstant($element, ['code' => $defaultcountry]);
+                    $autocomplete->freeze();
+                    $autocomplete->setPersistantFreeze(false);
+                } else {
+                    $mform->setDefault($element . '[code]', $defaultcountry);
+                }
             }
         }
+
+        $PAGE->requires->js_call_amd('profilefield_phone/form', 'init', ['name' => $element]);
     }
     /**
      * Summary of set_default_phone_form
@@ -134,7 +143,7 @@ class phone {
      */
     public static function validate_phone_from_submitted_data($data, $invalidstring = '') {
         if (empty($invalidstring)) {
-            $invalidstring = 'Invalid data';
+            $invalidstring = get_string('invaliddata', 'profilefield_phone');
         }
 
         $data   = (array)$data;
@@ -178,6 +187,7 @@ class phone {
     /**
      * Get an array of country codes to be used in forms.
      * @param  bool     $fullstring
+     * @param  bool     $fortemplate
      * @return string[]
      */
     public static function get_country_codes_options($fullstring = false) {
@@ -185,14 +195,21 @@ class phone {
 
         $strman = get_string_manager();
         foreach (self::data() as $data) {
-            if ($fullstring && $strman->string_exists($data['alpha2'], 'countries')) {
-                $country = get_string($data['alpha2'], 'countries');
+            if ($fullstring) {
+                if ($strman->string_exists($data['alpha2'], 'countries')) {
+                    $country = get_string($data['alpha2'], 'countries');
+                } else {
+                    // Fallback as the string not exist.
+                    $country = $data['country_name'];
+                }
             } else {
                 $country = $data['alpha3'];
             }
+
             $options[$data['alpha2']] = $country . ' (+' . $data['country_code'] . ')';
         }
 
+        asort($options);
         return $options;
     }
 
