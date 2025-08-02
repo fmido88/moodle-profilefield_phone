@@ -34,40 +34,41 @@ class data {
      * @var array
      */
     public const PHONE_DATA = [
-        [
-            'alpha2'            => 'US',
-            'alpha3'            => 'USA',
-            'country_code'      => '1',
-            'country_name'      => 'United States',
-            'mobile_begin_with' => ['201', '202', '203', '205', '206', '207', '208', '209', '210', '212', '213', '214', '215',
-                '216', '217', '218', '219', '220', '223', '224', '225', '227', '228', '229', '231', '234', '239', '240',
-                '248', '251', '252', '253', '254', '256', '260', '262', '267', '269', '270', '272', '274', '276', '278',
-                '281', '283', '301', '302', '303', '304', '305', '307', '308', '309', '310', '312', '313', '314', '315',
-                '316', '317', '318', '319', '320', '321', '323', '325', '327', '329', '330', '331', '332', '334', '336', '337',
-                '339', '341', '346', '347', '351', '352', '353', '360', '361', '364', '369', '380', '385', '386', '401', '402',
-                '404', '405', '406', '407', '408', '409', '410', '412', '413', '414', '415', '417', '419', '423', '424',
-                '425', '430', '432', '434', '435', '440', '441', '442', '443', '445', '447', '458', '463', '464', '469', '470', '472', '475',
-                '478', '479', '480', '484', '501', '502', '503', '504', '505', '507', '508', '509', '510', '512', '513',
-                '515', '516', '517', '518', '520', '530', '531', '534', '539', '540', '541', '551', '557', '559', '561',
-                '562', '563', '564', '567', '570', '571', '572', '573', '574', '575', '580', '582', '585', '586', '601', '602',
-                '603', '605', '606', '607', '608', '609', '610', '612', '614', '615', '616', '617', '618', '619', '620',
-                '623', '626', '627', '628', '629', '630', '631', '636', '640', '641', '645', '646', '650', '651', '656', '657', '659', '660',
-                '661', '662', '667', '669', '678', '679', '680', '681', '682', '689', '701', '702', '703', '704', '706', '707',
-                '708', '712', '713', '714', '715', '716', '717', '718', '719', '720', '724', '725', '726', '727', '728', '730', '731',
-                '732', '734', '737', '740', '743', '747', '752', '754', '757', '760', '762', '763', '764', '765', '769', '770', '771',
-                '772', '773', '774', '775', '779', '781', '785', '786', '787', '801', '802', '803', '804', '805', '806', '808',
-                '810', '812', '813', '814', '815', '816', '817', '818', '820', '828', '830', '831', '832', '835', '838', '840', '843', '845',
-                '847', '848', '850', '854', '856', '857', '858', '859', '860', '862', '863', '864', '865', '870', '872',
-                '878', '901', '903', '904', '906', '907', '908', '909', '910', '912', '913', '914', '915', '916', '917',
-                '918', '919', '920', '925', '927', '928', '929', '930', '931', '934', '935', '936', '937', '938', '939', '940', '941', '945',
-                '947', '949', '951', '952', '954', '956', '957', '959', '970', '971', '972', '973', '975', '978', '979',
-                '980', '984', '985', '986', '989', '888', '800', '833', '844', '855', '866', '877', '279', '340', '983', '448', '943', '363',
-                '326', '839', '826', '948',
-            ],
+        'US' => [
+            'alpha2'               => 'US',
+            'alpha3'               => 'USA',
+            'country_code'         => '1',
+            'country_name'         => 'United States',
+            'mobile_begin_with'    => [
+                    '201', '202', '203', '205', '206', '207', '208', '209', '210', '212', '213', '214', '215', '216', '217',
+                    '218', '219', '220', '223', '224', '225', '227', '228', '229', '231', '234', '239', '240', '248', '251',
+                    '252', '253', '254', '256', '260', '262', '267', '269', '270', '272', '274', '276', '278', '281', '283',
+                    '301', '302', '303', '304', '305', '307', '308', '309', '310', '312', '313', '314', '315', '316', '317',
+                    '318', '319', '320', '321', '323', '325', '327', '329', '330', '331', '332', '334', '336', '337', '339',
+                    '341', '346', '347', '351', '352', '353', '360', '361', '364', '369', '380', '385', '386', '401', '402',
+                    '404', '405', '406', '407', '408', '409', '410', '412', '413', '414', '415', '417', '419', '423', '424',
+                    '425', '430', '432', '434', '435', '440', '441', '442', '443', '445', '447', '458', '463', '464', '469',
+                    '470', '472', '475', '478', '479', '480', '484', '501', '502', '503', '504', '505', '507', '508', '509',
+                    '510', '512', '513', '515', '516', '517', '518', '520', '530', '531', '534', '539', '540', '541', '551',
+                    '557', '559', '561', '562', '563', '564', '567', '570', '571', '572', '573', '574', '575', '580', '582',
+                    '585', '586', '601', '602', '603', '605', '606', '607', '608', '609', '610', '612', '614', '615', '616',
+                    '617', '618', '619', '620', '623', '626', '627', '628', '629', '630', '631', '636', '640', '641', '645',
+                    '646', '650', '651', '656', '657', '659', '660', '661', '662', '667', '669', '678', '679', '680', '681',
+                    '682', '689', '701', '702', '703', '704', '706', '707', '708', '712', '713', '714', '715', '716', '717',
+                    '718', '719', '720', '724', '725', '726', '727', '728', '730', '731', '732', '734', '737', '740', '743',
+                    '747', '752', '754', '757', '760', '762', '763', '764', '765', '769', '770', '771', '772', '773', '774',
+                    '775', '779', '781', '785', '786', '787', '801', '802', '803', '804', '805', '806', '808', '810', '812',
+                    '813', '814', '815', '816', '817', '818', '820', '828', '830', '831', '832', '835', '838', '840', '843',
+                    '845', '847', '848', '850', '854', '856', '857', '858', '859', '860', '862', '863', '864', '865', '870',
+                    '872', '878', '901', '903', '904', '906', '907', '908', '909', '910', '912', '913', '914', '915', '916',
+                    '917', '918', '919', '920', '925', '927', '928', '929', '930', '931', '934', '935', '936', '937', '938',
+                    '939', '940', '941', '945', '947', '949', '951', '952', '954', '956', '957', '959', '970', '971', '972',
+                    '973', '975', '978', '979', '980', '984', '985', '986', '989', '888', '800', '833', '844', '855', '866',
+                    '877', '279', '340', '983', '448', '943', '363', '326', '839', '826', '948', '924',
+                ],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'AW' => [
             'alpha2'               => 'AW',
             'alpha3'               => 'ABW',
             'country_code'         => '297',
@@ -75,7 +76,7 @@ class data {
             'mobile_begin_with'    => ['56', '59', '64', '73', '74', '99'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'AF' => [
             'alpha2'               => 'AF',
             'alpha3'               => 'AFG',
             'country_code'         => '93',
@@ -83,7 +84,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'AO' => [
             'alpha2'               => 'AO',
             'alpha3'               => 'AGO',
             'country_code'         => '244',
@@ -91,7 +92,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'AI' => [
             'alpha2'               => 'AI',
             'alpha3'               => 'AIA',
             'country_code'         => '1',
@@ -99,7 +100,7 @@ class data {
             'mobile_begin_with'    => ['2642', '2644', '2645', '2647'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'AX' => [
             'alpha2'               => 'AX',
             'alpha3'               => 'ALA',
             'country_code'         => '358',
@@ -107,7 +108,7 @@ class data {
             'mobile_begin_with'    => ['18'],
             'phone_number_lengths' => [6, 7, 8],
         ],
-        [
+        'AL' => [
             'alpha2'               => 'AL',
             'alpha3'               => 'ALB',
             'country_code'         => '355',
@@ -115,7 +116,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'AD' => [
             'alpha2'               => 'AD',
             'alpha3'               => 'AND',
             'country_code'         => '376',
@@ -123,8 +124,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '6'],
             'phone_number_lengths' => [6],
         ],
-
-        [
+        'BQ' => [
             'alpha2'               => 'BQ',
             'alpha3'               => 'BES',
             'country_code'         => '599',
@@ -132,7 +132,7 @@ class data {
             'mobile_begin_with'    => ['3', '416', '700', '701', '795'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'AE' => [
             'alpha2'               => 'AE',
             'alpha3'               => 'ARE',
             'country_code'         => '971',
@@ -140,7 +140,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'AR' => [
             'alpha2'               => 'AR',
             'alpha3'               => 'ARG',
             'country_code'         => '54',
@@ -148,7 +148,7 @@ class data {
             'mobile_begin_with'    => ['1', '2', '3'],
             'phone_number_lengths' => [8, 9, 10, 11, 12],
         ],
-        [
+        'AM' => [
             'alpha2'               => 'AM',
             'alpha3'               => 'ARM',
             'country_code'         => '374',
@@ -156,8 +156,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '5', '7', '9'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'AS' => [
             'alpha2'               => 'AS',
             'alpha3'               => 'ASM',
             'country_code'         => '1',
@@ -165,8 +164,7 @@ class data {
             'mobile_begin_with'    => ['684733', '684258'],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'AG' => [
             'alpha2'               => 'AG',
             'alpha3'               => 'ATG',
             'country_code'         => '1',
@@ -174,7 +172,7 @@ class data {
             'mobile_begin_with'    => ['2687'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'AU' => [
             'alpha2'               => 'AU',
             'alpha3'               => 'AUS',
             'country_code'         => '61',
@@ -182,7 +180,7 @@ class data {
             'mobile_begin_with'    => ['4'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'AT' => [
             'alpha2'               => 'AT',
             'alpha3'               => 'AUT',
             'country_code'         => '43',
@@ -190,7 +188,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [10, 11, 12, 13, 14],
         ],
-        [
+        'AZ' => [
             'alpha2'               => 'AZ',
             'alpha3'               => 'AZE',
             'country_code'         => '994',
@@ -198,7 +196,7 @@ class data {
             'mobile_begin_with'    => ['10', '50', '51', '55', '60', '70', '77', '99'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'BI' => [
             'alpha2'               => 'BI',
             'alpha3'               => 'BDI',
             'country_code'         => '257',
@@ -206,7 +204,7 @@ class data {
             'mobile_begin_with'    => ['71', '72', '75', '76', '77', '79', '29', '61', '68', '69'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'BE' => [
             'alpha2'               => 'BE',
             'alpha3'               => 'BEL',
             'country_code'         => '32',
@@ -214,7 +212,7 @@ class data {
             'mobile_begin_with'    => ['4', '3'],
             'phone_number_lengths' => [9, 8],
         ],
-        [
+        'BJ' => [
             'alpha2'               => 'BJ',
             'alpha3'               => 'BEN',
             'country_code'         => '229',
@@ -222,7 +220,7 @@ class data {
             'mobile_begin_with'    => ['4', '6', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'BF' => [
             'alpha2'               => 'BF',
             'alpha3'               => 'BFA',
             'country_code'         => '226',
@@ -230,7 +228,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'BD' => [
             'alpha2'               => 'BD',
             'alpha3'               => 'BGD',
             'country_code'         => '880',
@@ -238,7 +236,7 @@ class data {
             'mobile_begin_with'    => ['1'],
             'phone_number_lengths' => [8, 9, 10],
         ],
-        [
+        'BG' => [
             'alpha2'               => 'BG',
             'alpha3'               => 'BGR',
             'country_code'         => '359',
@@ -246,7 +244,7 @@ class data {
             'mobile_begin_with'    => ['87', '88', '89', '98', '99', '43'],
             'phone_number_lengths' => [8, 9],
         ],
-        [
+        'BH' => [
             'alpha2'               => 'BH',
             'alpha3'               => 'BHR',
             'country_code'         => '973',
@@ -254,7 +252,7 @@ class data {
             'mobile_begin_with'    => ['3'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'BS' => [
             'alpha2'               => 'BS',
             'alpha3'               => 'BHS',
             'country_code'         => '1',
@@ -262,7 +260,7 @@ class data {
             'mobile_begin_with'    => ['242'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'BA' => [
             'alpha2'               => 'BA',
             'alpha3'               => 'BIH',
             'country_code'         => '387',
@@ -270,8 +268,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8, 9],
         ],
-
-        [
+        'BY' => [
             'alpha2'               => 'BY',
             'alpha3'               => 'BLR',
             'country_code'         => '375',
@@ -279,7 +276,7 @@ class data {
             'mobile_begin_with'    => ['25', '29', '33', '44'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'BZ' => [
             'alpha2'               => 'BZ',
             'alpha3'               => 'BLZ',
             'country_code'         => '501',
@@ -287,8 +284,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [7],
         ],
-
-        [
+        'BM' => [
             'alpha2'               => 'BM',
             'alpha3'               => 'BMU',
             'country_code'         => '1',
@@ -296,7 +292,7 @@ class data {
             'mobile_begin_with'    => ['4413', '4415', '4417'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'BO' => [
             'alpha2'               => 'BO',
             'alpha3'               => 'BOL',
             'country_code'         => '591',
@@ -304,24 +300,21 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
-            'alpha2'            => 'BR',
-            'alpha3'            => 'BRA',
-            'country_code'      => '55',
-            'country_name'      => 'Brazil',
-            'mobile_begin_with' => [
-                '119', '129', '139', '149', '159', '169', '179', '189', '199', '219', '229', '249', '279', '289',
-                '319', '329', '339', '349', '359', '379', '389',
-                '419', '429', '439', '449', '459', '469', '479', '489', '499',
-                '519', '539', '549', '559',
-                '619', '629', '639', '649', '659', '669', '679', '689', '699',
-                '719', '739', '749', '759', '779', '799',
-                '819', '829', '839', '849', '859', '869', '879', '889', '899',
-                '919', '929', '939', '949', '959', '969', '979', '989', '999',
-            ],
+        'BR' => [
+            'alpha2'               => 'BR',
+            'alpha3'               => 'BRA',
+            'country_code'         => '55',
+            'country_name'         => 'Brazil',
+            'mobile_begin_with'    => [
+                    '119', '129', '139', '149', '159', '169', '179', '189', '199', '219', '229', '249', '279', '289', '319',
+                    '329', '339', '349', '359', '379', '389', '419', '429', '439', '449', '459', '469', '479', '489', '499',
+                    '519', '539', '549', '559', '619', '629', '639', '649', '659', '669', '679', '689', '699', '719', '739',
+                    '749', '759', '779', '799', '819', '829', '839', '849', '859', '869', '879', '889', '899', '919', '929',
+                    '939', '949', '959', '969', '979', '989', '999',
+                ],
             'phone_number_lengths' => [10, 11],
         ],
-        [
+        'BB' => [
             'alpha2'               => 'BB',
             'alpha3'               => 'BRB',
             'country_code'         => '1',
@@ -329,7 +322,7 @@ class data {
             'mobile_begin_with'    => ['246'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'BN' => [
             'alpha2'               => 'BN',
             'alpha3'               => 'BRN',
             'country_code'         => '673',
@@ -337,7 +330,7 @@ class data {
             'mobile_begin_with'    => ['7', '8'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'BT' => [
             'alpha2'               => 'BT',
             'alpha3'               => 'BTN',
             'country_code'         => '975',
@@ -345,8 +338,7 @@ class data {
             'mobile_begin_with'    => ['17'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'BW' => [
             'alpha2'               => 'BW',
             'alpha3'               => 'BWA',
             'country_code'         => '267',
@@ -354,7 +346,7 @@ class data {
             'mobile_begin_with'    => ['71', '72', '73', '74', '75', '76', '77', '78', '79'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'CF' => [
             'alpha2'               => 'CF',
             'alpha3'               => 'CAF',
             'country_code'         => '236',
@@ -362,23 +354,20 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [8],
         ],
-
-        [
-            'alpha2'            => 'CA',
-            'alpha3'            => 'CAN',
-            'country_code'      => '1',
-            'country_name'      => 'Canada',
-            'mobile_begin_with' => [
-                '204', '226', '236', '249', '250', '263', '289', '306', '343', '354',
-                '365', '367', '368', '403', '416', '418', '431', '437', '438', '450',
-                '468', '474', '506', '514', '519', '548', '579', '581', '584', '587',
-                '600', '604', '613', '639', '647', '672', '683', '705', '709', '742',
-                '753', '778', '780', '782', '807', '819', '825', '867', '873', '902',
-                '905', '428', '382'],
+        'CA' => [
+            'alpha2'               => 'CA',
+            'alpha3'               => 'CAN',
+            'country_code'         => '1',
+            'country_name'         => 'Canada',
+            'mobile_begin_with'    => [
+                    '204', '226', '236', '249', '250', '263', '289', '306', '343', '354', '365', '367', '368', '403', '416',
+                    '418', '431', '437', '438', '450', '468', '474', '506', '514', '519', '548', '579', '581', '584', '587',
+                    '600', '604', '613', '639', '647', '672', '683', '705', '709', '742', '753', '778', '780', '782', '807',
+                    '819', '825', '867', '873', '902', '905', '428', '382', '942',
+                ],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'CH' => [
             'alpha2'               => 'CH',
             'alpha3'               => 'CHE',
             'country_code'         => '41',
@@ -386,7 +375,7 @@ class data {
             'mobile_begin_with'    => ['74', '75', '76', '77', '78', '79'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'CL' => [
             'alpha2'               => 'CL',
             'alpha3'               => 'CHL',
             'country_code'         => '56',
@@ -394,7 +383,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'CN' => [
             'alpha2'               => 'CN',
             'alpha3'               => 'CHN',
             'country_code'         => '86',
@@ -402,15 +391,15 @@ class data {
             'mobile_begin_with'    => ['13', '14', '15', '17', '18', '19', '16'],
             'phone_number_lengths' => [11],
         ],
-        [
+        'CI' => [
             'alpha2'               => 'CI',
             'alpha3'               => 'CIV',
             'country_code'         => '225',
-            'country_name'         => "Côte D'Ivoire",
+            'country_name'         => 'Côte D\'Ivoire',
             'mobile_begin_with'    => ['0', '4', '5', '6', '7', '8'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'CM' => [
             'alpha2'               => 'CM',
             'alpha3'               => 'CMR',
             'country_code'         => '237',
@@ -418,7 +407,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'CD' => [
             'alpha2'               => 'CD',
             'alpha3'               => 'COD',
             'country_code'         => '243',
@@ -426,7 +415,7 @@ class data {
             'mobile_begin_with'    => ['8', '9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'CG' => [
             'alpha2'               => 'CG',
             'alpha3'               => 'COG',
             'country_code'         => '242',
@@ -434,7 +423,7 @@ class data {
             'mobile_begin_with'    => ['0'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'CK' => [
             'alpha2'               => 'CK',
             'alpha3'               => 'COK',
             'country_code'         => '682',
@@ -442,7 +431,7 @@ class data {
             'mobile_begin_with'    => ['5', '7'],
             'phone_number_lengths' => [5],
         ],
-        [
+        'CO' => [
             'alpha2'               => 'CO',
             'alpha3'               => 'COL',
             'country_code'         => '57',
@@ -450,7 +439,7 @@ class data {
             'mobile_begin_with'    => ['3'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'CW' => [
             'alpha2'               => 'CW',
             'alpha3'               => 'CUW',
             'country_code'         => '599',
@@ -458,7 +447,7 @@ class data {
             'mobile_begin_with'    => ['95', '96'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'KM' => [
             'alpha2'               => 'KM',
             'alpha3'               => 'COM',
             'country_code'         => '269',
@@ -466,7 +455,7 @@ class data {
             'mobile_begin_with'    => ['3', '76'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'CV' => [
             'alpha2'               => 'CV',
             'alpha3'               => 'CPV',
             'country_code'         => '238',
@@ -474,7 +463,7 @@ class data {
             'mobile_begin_with'    => ['5', '9'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'CR' => [
             'alpha2'               => 'CR',
             'alpha3'               => 'CRI',
             'country_code'         => '506',
@@ -482,7 +471,7 @@ class data {
             'mobile_begin_with'    => ['5', '6', '7', '8'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'CU' => [
             'alpha2'               => 'CU',
             'alpha3'               => 'CUB',
             'country_code'         => '53',
@@ -490,8 +479,7 @@ class data {
             'mobile_begin_with'    => ['5', '6'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'KY' => [
             'alpha2'               => 'KY',
             'alpha3'               => 'CYM',
             'country_code'         => '1',
@@ -499,7 +487,7 @@ class data {
             'mobile_begin_with'    => ['345'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'CY' => [
             'alpha2'               => 'CY',
             'alpha3'               => 'CYP',
             'country_code'         => '357',
@@ -507,7 +495,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'CZ' => [
             'alpha2'               => 'CZ',
             'alpha3'               => 'CZE',
             'country_code'         => '420',
@@ -515,7 +503,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'DE' => [
             'alpha2'               => 'DE',
             'alpha3'               => 'DEU',
             'country_code'         => '49',
@@ -523,7 +511,7 @@ class data {
             'mobile_begin_with'    => ['15', '16', '17'],
             'phone_number_lengths' => [10, 11],
         ],
-        [
+        'DJ' => [
             'alpha2'               => 'DJ',
             'alpha3'               => 'DJI',
             'country_code'         => '253',
@@ -531,7 +519,7 @@ class data {
             'mobile_begin_with'    => ['77'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'DM' => [
             'alpha2'               => 'DM',
             'alpha3'               => 'DMA',
             'country_code'         => '1',
@@ -539,24 +527,23 @@ class data {
             'mobile_begin_with'    => ['767'],
             'phone_number_lengths' => [10],
         ],
-        [
-            'alpha2'            => 'DK',
-            'alpha3'            => 'DNK',
-            'country_code'      => '45',
-            'country_name'      => 'Denmark',
-            'mobile_begin_with' => [
-                '2', '30', '31', '40', '41', '42', '50', '51', '52', '53', '60', '61', '71', '81', '91', '92', '93',
-                '342', '344', '345', '346', '347', '348', '349', '356', '357', '359', '362',
-                '365', '366', '389', '398', '431', '441', '462', '466', '468', '472', '474',
-                '476', '478', '485', '486', '488', '489', '493', '494', '495', '496', '498',
-                '499', '542', '543', '545', '551', '552', '556', '571', '572', '573', '574',
-                '577', '579', '584', '586', '587', '589', '597', '598', '627', '629', '641',
-                '649', '658', '662', '663', '664', '665', '667', '692', '693', '694', '697',
-                '771', '772', '782', '783', '785', '786', '788', '789', '826', '827', '829',
-            ],
+        'DK' => [
+            'alpha2'               => 'DK',
+            'alpha3'               => 'DNK',
+            'country_code'         => '45',
+            'country_name'         => 'Denmark',
+            'mobile_begin_with'    => [
+                    '2', '30', '31', '40', '41', '42', '50', '51', '52', '53', '60', '61', '71', '81', '91',
+                    '92', '93', '342', '344', '345', '346', '347', '348', '349', '356', '357', '359', '362', '365', '366',
+                    '389', '398', '431', '441', '462', '466', '468', '472', '474', '476', '478', '485', '486', '488', '489',
+                    '493', '494', '495', '496', '498', '499', '542', '543', '545', '551', '552', '556', '571', '572', '573',
+                    '574', '577', '579', '584', '586', '587', '589', '597', '598', '627', '629', '641', '649', '658', '662',
+                    '663', '664', '665', '667', '692', '693', '694', '697', '771', '772', '782', '783', '785', '786', '788',
+                    '789', '826', '827', '829',
+                ],
             'phone_number_lengths' => [8],
         ],
-        [
+        'DO' => [
             'alpha2'               => 'DO',
             'alpha3'               => 'DOM',
             'country_code'         => '1',
@@ -564,7 +551,7 @@ class data {
             'mobile_begin_with'    => ['809', '829', '849'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'DZ' => [
             'alpha2'               => 'DZ',
             'alpha3'               => 'DZA',
             'country_code'         => '213',
@@ -572,7 +559,7 @@ class data {
             'mobile_begin_with'    => ['5', '6', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'EC' => [
             'alpha2'               => 'EC',
             'alpha3'               => 'ECU',
             'country_code'         => '593',
@@ -580,7 +567,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'EG' => [
             'alpha2'               => 'EG',
             'alpha3'               => 'EGY',
             'country_code'         => '20',
@@ -588,7 +575,7 @@ class data {
             'mobile_begin_with'    => ['10', '11', '12', '15'],
             'phone_number_lengths' => [10, 8],
         ],
-        [
+        'ER' => [
             'alpha2'               => 'ER',
             'alpha3'               => 'ERI',
             'country_code'         => '291',
@@ -596,8 +583,7 @@ class data {
             'mobile_begin_with'    => ['1', '7', '8'],
             'phone_number_lengths' => [7],
         ],
-
-        [
+        'ES' => [
             'alpha2'               => 'ES',
             'alpha3'               => 'ESP',
             'country_code'         => '34',
@@ -605,7 +591,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'EE' => [
             'alpha2'               => 'EE',
             'alpha3'               => 'EST',
             'country_code'         => '372',
@@ -613,7 +599,7 @@ class data {
             'mobile_begin_with'    => ['5', '81', '82', '83'],
             'phone_number_lengths' => [7, 8],
         ],
-        [
+        'ET' => [
             'alpha2'               => 'ET',
             'alpha3'               => 'ETH',
             'country_code'         => '251',
@@ -621,7 +607,7 @@ class data {
             'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'FI' => [
             'alpha2'               => 'FI',
             'alpha3'               => 'FIN',
             'country_code'         => '358',
@@ -629,7 +615,7 @@ class data {
             'mobile_begin_with'    => ['4', '5'],
             'phone_number_lengths' => [6, 7, 9, 10],
         ],
-        [
+        'FJ' => [
             'alpha2'               => 'FJ',
             'alpha3'               => 'FJI',
             'country_code'         => '679',
@@ -637,7 +623,7 @@ class data {
             'mobile_begin_with'    => ['2', '7', '8', '9'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'FK' => [
             'alpha2'               => 'FK',
             'alpha3'               => 'FLK',
             'country_code'         => '500',
@@ -645,7 +631,7 @@ class data {
             'mobile_begin_with'    => ['5', '6'],
             'phone_number_lengths' => [5],
         ],
-        [
+        'FR' => [
             'alpha2'               => 'FR',
             'alpha3'               => 'FRA',
             'country_code'         => '33',
@@ -653,7 +639,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'FO' => [
             'alpha2'               => 'FO',
             'alpha3'               => 'FRO',
             'country_code'         => '298',
@@ -661,7 +647,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [6],
         ],
-        [
+        'FM' => [
             'alpha2'               => 'FM',
             'alpha3'               => 'FSM',
             'country_code'         => '691',
@@ -669,7 +655,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [7],
         ],
-        [
+        'GA' => [
             'alpha2'               => 'GA',
             'alpha3'               => 'GAB',
             'country_code'         => '241',
@@ -677,7 +663,7 @@ class data {
             'mobile_begin_with'    => ['2', '3', '4', '5', '6', '7'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'GB' => [
             'alpha2'               => 'GB',
             'alpha3'               => 'GBR',
             'country_code'         => '44',
@@ -685,7 +671,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'GE' => [
             'alpha2'               => 'GE',
             'alpha3'               => 'GEO',
             'country_code'         => '995',
@@ -693,8 +679,7 @@ class data {
             'mobile_begin_with'    => ['5', '7'],
             'phone_number_lengths' => [9],
         ],
-
-        [
+        'GH' => [
             'alpha2'               => 'GH',
             'alpha3'               => 'GHA',
             'country_code'         => '233',
@@ -702,7 +687,7 @@ class data {
             'mobile_begin_with'    => ['2', '5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'GI' => [
             'alpha2'               => 'GI',
             'alpha3'               => 'GIB',
             'country_code'         => '350',
@@ -710,7 +695,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'GN' => [
             'alpha2'               => 'GN',
             'alpha3'               => 'GIN',
             'country_code'         => '224',
@@ -718,7 +703,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'GP' => [
             'alpha2'               => 'GP',
             'alpha3'               => 'GLP',
             'country_code'         => '590',
@@ -726,7 +711,7 @@ class data {
             'mobile_begin_with'    => ['690'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'GM' => [
             'alpha2'               => 'GM',
             'alpha3'               => 'GMB',
             'country_code'         => '220',
@@ -734,7 +719,7 @@ class data {
             'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'GW' => [
             'alpha2'               => 'GW',
             'alpha3'               => 'GNB',
             'country_code'         => '245',
@@ -742,7 +727,7 @@ class data {
             'mobile_begin_with'    => ['5', '6', '7'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'GQ' => [
             'alpha2'               => 'GQ',
             'alpha3'               => 'GNQ',
             'country_code'         => '240',
@@ -750,7 +735,7 @@ class data {
             'mobile_begin_with'    => ['222', '551'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'GR' => [
             'alpha2'               => 'GR',
             'alpha3'               => 'GRC',
             'country_code'         => '30',
@@ -758,7 +743,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'GD' => [
             'alpha2'               => 'GD',
             'alpha3'               => 'GRD',
             'country_code'         => '1',
@@ -766,7 +751,7 @@ class data {
             'mobile_begin_with'    => ['473'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'GL' => [
             'alpha2'               => 'GL',
             'alpha3'               => 'GRL',
             'country_code'         => '299',
@@ -774,7 +759,7 @@ class data {
             'mobile_begin_with'    => ['2', '4', '5'],
             'phone_number_lengths' => [6],
         ],
-        [
+        'GT' => [
             'alpha2'               => 'GT',
             'alpha3'               => 'GTM',
             'country_code'         => '502',
@@ -782,7 +767,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '5'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'GF' => [
             'alpha2'               => 'GF',
             'alpha3'               => 'GUF',
             'country_code'         => '594',
@@ -790,7 +775,7 @@ class data {
             'mobile_begin_with'    => ['694'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'GU' => [
             'alpha2'               => 'GU',
             'alpha3'               => 'GUM',
             'country_code'         => '1',
@@ -798,7 +783,7 @@ class data {
             'mobile_begin_with'    => ['671'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'GY' => [
             'alpha2'               => 'GY',
             'alpha3'               => 'GUY',
             'country_code'         => '592',
@@ -806,16 +791,18 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'HK' => [
             'alpha2'               => 'HK',
             'alpha3'               => 'HKG',
             'country_code'         => '852',
             'country_name'         => 'Hong Kong',
-            'mobile_begin_with'    => ['4', '5', '6', '70', '71', '72', '73', '81', '82', '83', '84', '85', '86', '87', '88', '89', '9'],
+            'mobile_begin_with'    => [
+                    '4', '5', '6', '70', '71', '72', '73', '81', '82', '83', '84', '85', '86', '87', '88',
+                    '89', '9',
+                ],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'HN' => [
             'alpha2'               => 'HN',
             'alpha3'               => 'HND',
             'country_code'         => '504',
@@ -823,7 +810,7 @@ class data {
             'mobile_begin_with'    => ['3', '7', '8', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'HR' => [
             'alpha2'               => 'HR',
             'alpha3'               => 'HRV',
             'country_code'         => '385',
@@ -831,7 +818,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8, 9],
         ],
-        [
+        'HT' => [
             'alpha2'               => 'HT',
             'alpha3'               => 'HTI',
             'country_code'         => '509',
@@ -839,7 +826,7 @@ class data {
             'mobile_begin_with'    => ['3', '4'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'HU' => [
             'alpha2'               => 'HU',
             'alpha3'               => 'HUN',
             'country_code'         => '36',
@@ -847,7 +834,7 @@ class data {
             'mobile_begin_with'    => ['20', '30', '31', '50', '70'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'ID' => [
             'alpha2'               => 'ID',
             'alpha3'               => 'IDN',
             'country_code'         => '62',
@@ -855,8 +842,7 @@ class data {
             'mobile_begin_with'    => ['8'],
             'phone_number_lengths' => [9, 10, 11, 12],
         ],
-
-        [
+        'IN' => [
             'alpha2'               => 'IN',
             'alpha3'               => 'IND',
             'country_code'         => '91',
@@ -864,8 +850,7 @@ class data {
             'mobile_begin_with'    => ['6', '7', '8', '9'],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'IE' => [
             'alpha2'               => 'IE',
             'alpha3'               => 'IRL',
             'country_code'         => '353',
@@ -873,7 +858,7 @@ class data {
             'mobile_begin_with'    => ['82', '83', '84', '85', '86', '87', '88', '89'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'IR' => [
             'alpha2'               => 'IR',
             'alpha3'               => 'IRN',
             'country_code'         => '98',
@@ -881,7 +866,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'IQ' => [
             'alpha2'               => 'IQ',
             'alpha3'               => 'IRQ',
             'country_code'         => '964',
@@ -889,7 +874,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'IS' => [
             'alpha2'               => 'IS',
             'alpha3'               => 'ISL',
             'country_code'         => '354',
@@ -897,7 +882,7 @@ class data {
             'mobile_begin_with'    => ['6', '7', '8'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'IL' => [
             'alpha2'               => 'IL',
             'alpha3'               => 'ISR',
             'country_code'         => '972',
@@ -905,7 +890,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'IT' => [
             'alpha2'               => 'IT',
             'alpha3'               => 'ITA',
             'country_code'         => '39',
@@ -913,7 +898,7 @@ class data {
             'mobile_begin_with'    => ['3'],
             'phone_number_lengths' => [9, 10],
         ],
-        [
+        'JM' => [
             'alpha2'               => 'JM',
             'alpha3'               => 'JAM',
             'country_code'         => '1',
@@ -921,8 +906,7 @@ class data {
             'mobile_begin_with'    => ['876'],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'JO' => [
             'alpha2'               => 'JO',
             'alpha3'               => 'JOR',
             'country_code'         => '962',
@@ -930,7 +914,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'JP' => [
             'alpha2'               => 'JP',
             'alpha3'               => 'JPN',
             'country_code'         => '81',
@@ -938,7 +922,7 @@ class data {
             'mobile_begin_with'    => ['70', '80', '90'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'KZ' => [
             'alpha2'               => 'KZ',
             'alpha3'               => 'KAZ',
             'country_code'         => '7',
@@ -946,7 +930,7 @@ class data {
             'mobile_begin_with'    => ['70', '74', '77'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'KE' => [
             'alpha2'               => 'KE',
             'alpha3'               => 'KEN',
             'country_code'         => '254',
@@ -954,7 +938,7 @@ class data {
             'mobile_begin_with'    => ['7', '1'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'KG' => [
             'alpha2'               => 'KG',
             'alpha3'               => 'KGZ',
             'country_code'         => '996',
@@ -962,7 +946,7 @@ class data {
             'mobile_begin_with'    => ['20', '22', '31258', '312973', '5', '600', '7', '88', '912', '99'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'KH' => [
             'alpha2'               => 'KH',
             'alpha3'               => 'KHM',
             'country_code'         => '855',
@@ -970,7 +954,7 @@ class data {
             'mobile_begin_with'    => ['1', '6', '7', '8', '9'],
             'phone_number_lengths' => [8, 9],
         ],
-        [
+        'KI' => [
             'alpha2'               => 'KI',
             'alpha3'               => 'KIR',
             'country_code'         => '686',
@@ -978,7 +962,7 @@ class data {
             'mobile_begin_with'    => ['9', '30'],
             'phone_number_lengths' => [5],
         ],
-        [
+        'KN' => [
             'alpha2'               => 'KN',
             'alpha3'               => 'KNA',
             'country_code'         => '1',
@@ -986,7 +970,7 @@ class data {
             'mobile_begin_with'    => ['869'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'KR' => [
             'alpha2'               => 'KR',
             'alpha3'               => 'KOR',
             'country_code'         => '82',
@@ -994,8 +978,7 @@ class data {
             'mobile_begin_with'    => ['1'],
             'phone_number_lengths' => [9, 10],
         ],
-
-        [
+        'XK' => [
             'alpha2'               => 'XK',
             'alpha3'               => 'XKX',
             'country_code'         => '383',
@@ -1003,7 +986,7 @@ class data {
             'mobile_begin_with'    => ['43', '44', '45', '46', '47', '48', '49'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'KW' => [
             'alpha2'               => 'KW',
             'alpha3'               => 'KWT',
             'country_code'         => '965',
@@ -1011,15 +994,15 @@ class data {
             'mobile_begin_with'    => ['5', '6', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'LA' => [
             'alpha2'               => 'LA',
             'alpha3'               => 'LAO',
             'country_code'         => '856',
-            'country_name'         => "Lao People's Democratic Republic",
+            'country_name'         => 'Lao People\'s Democratic Republic',
             'mobile_begin_with'    => ['20'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'LB' => [
             'alpha2'               => 'LB',
             'alpha3'               => 'LBN',
             'country_code'         => '961',
@@ -1027,7 +1010,7 @@ class data {
             'mobile_begin_with'    => ['3', '7', '8'],
             'phone_number_lengths' => [7, 8],
         ],
-        [
+        'LR' => [
             'alpha2'               => 'LR',
             'alpha3'               => 'LBR',
             'country_code'         => '231',
@@ -1035,7 +1018,7 @@ class data {
             'mobile_begin_with'    => ['4', '5', '6', '7'],
             'phone_number_lengths' => [7, 8],
         ],
-        [
+        'LY' => [
             'alpha2'               => 'LY',
             'alpha3'               => 'LBY',
             'country_code'         => '218',
@@ -1043,7 +1026,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'LC' => [
             'alpha2'               => 'LC',
             'alpha3'               => 'LCA',
             'country_code'         => '1',
@@ -1051,7 +1034,7 @@ class data {
             'mobile_begin_with'    => ['758'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'LI' => [
             'alpha2'               => 'LI',
             'alpha3'               => 'LIE',
             'country_code'         => '423',
@@ -1059,7 +1042,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'LK' => [
             'alpha2'               => 'LK',
             'alpha3'               => 'LKA',
             'country_code'         => '94',
@@ -1067,7 +1050,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'LS' => [
             'alpha2'               => 'LS',
             'alpha3'               => 'LSO',
             'country_code'         => '266',
@@ -1075,7 +1058,7 @@ class data {
             'mobile_begin_with'    => ['5', '6'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'LT' => [
             'alpha2'               => 'LT',
             'alpha3'               => 'LTU',
             'country_code'         => '370',
@@ -1083,7 +1066,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'LU' => [
             'alpha2'               => 'LU',
             'alpha3'               => 'LUX',
             'country_code'         => '352',
@@ -1091,7 +1074,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'LV' => [
             'alpha2'               => 'LV',
             'alpha3'               => 'LVA',
             'country_code'         => '371',
@@ -1099,7 +1082,7 @@ class data {
             'mobile_begin_with'    => ['2'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MO' => [
             'alpha2'               => 'MO',
             'alpha3'               => 'MAC',
             'country_code'         => '853',
@@ -1107,8 +1090,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'MA' => [
             'alpha2'               => 'MA',
             'alpha3'               => 'MAR',
             'country_code'         => '212',
@@ -1116,7 +1098,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'MC' => [
             'alpha2'               => 'MC',
             'alpha3'               => 'MCO',
             'country_code'         => '377',
@@ -1124,7 +1106,7 @@ class data {
             'mobile_begin_with'    => ['4', '6'],
             'phone_number_lengths' => [8, 9],
         ],
-        [
+        'MD' => [
             'alpha2'               => 'MD',
             'alpha3'               => 'MDA',
             'country_code'         => '373',
@@ -1132,7 +1114,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MG' => [
             'alpha2'               => 'MG',
             'alpha3'               => 'MDG',
             'country_code'         => '261',
@@ -1140,7 +1122,7 @@ class data {
             'mobile_begin_with'    => ['3'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'MV' => [
             'alpha2'               => 'MV',
             'alpha3'               => 'MDV',
             'country_code'         => '960',
@@ -1148,7 +1130,7 @@ class data {
             'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'MX' => [
             'alpha2'               => 'MX',
             'alpha3'               => 'MEX',
             'country_code'         => '52',
@@ -1156,7 +1138,7 @@ class data {
             'mobile_begin_with'    => [''],
             'phone_number_lengths' => [10, 11],
         ],
-        [
+        'MH' => [
             'alpha2'               => 'MH',
             'alpha3'               => 'MHL',
             'country_code'         => '692',
@@ -1164,7 +1146,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [7],
         ],
-        [
+        'MK' => [
             'alpha2'               => 'MK',
             'alpha3'               => 'MKD',
             'country_code'         => '389',
@@ -1172,7 +1154,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'ML' => [
             'alpha2'               => 'ML',
             'alpha3'               => 'MLI',
             'country_code'         => '223',
@@ -1180,7 +1162,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MT' => [
             'alpha2'               => 'MT',
             'alpha3'               => 'MLT',
             'country_code'         => '356',
@@ -1188,7 +1170,7 @@ class data {
             'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MM' => [
             'alpha2'               => 'MM',
             'alpha3'               => 'MMR',
             'country_code'         => '95',
@@ -1196,7 +1178,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8, 9, 10],
         ],
-        [
+        'ME' => [
             'alpha2'               => 'ME',
             'alpha3'               => 'MNE',
             'country_code'         => '382',
@@ -1204,7 +1186,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MN' => [
             'alpha2'               => 'MN',
             'alpha3'               => 'MNG',
             'country_code'         => '976',
@@ -1212,7 +1194,7 @@ class data {
             'mobile_begin_with'    => ['5', '8', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MP' => [
             'alpha2'               => 'MP',
             'alpha3'               => 'MNP',
             'country_code'         => '1',
@@ -1220,7 +1202,7 @@ class data {
             'mobile_begin_with'    => ['670'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'MZ' => [
             'alpha2'               => 'MZ',
             'alpha3'               => 'MOZ',
             'country_code'         => '258',
@@ -1228,7 +1210,7 @@ class data {
             'mobile_begin_with'    => ['8'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'MR' => [
             'alpha2'               => 'MR',
             'alpha3'               => 'MRT',
             'country_code'         => '222',
@@ -1236,7 +1218,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MS' => [
             'alpha2'               => 'MS',
             'alpha3'               => 'MSR',
             'country_code'         => '1',
@@ -1244,7 +1226,7 @@ class data {
             'mobile_begin_with'    => ['664'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'MQ' => [
             'alpha2'               => 'MQ',
             'alpha3'               => 'MTQ',
             'country_code'         => '596',
@@ -1252,7 +1234,7 @@ class data {
             'mobile_begin_with'    => ['696'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'MU' => [
             'alpha2'               => 'MU',
             'alpha3'               => 'MUS',
             'country_code'         => '230',
@@ -1260,7 +1242,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'MW' => [
             'alpha2'               => 'MW',
             'alpha3'               => 'MWI',
             'country_code'         => '265',
@@ -1268,7 +1250,7 @@ class data {
             'mobile_begin_with'    => ['77', '88', '99'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'MY' => [
             'alpha2'               => 'MY',
             'alpha3'               => 'MYS',
             'country_code'         => '60',
@@ -1276,7 +1258,7 @@ class data {
             'mobile_begin_with'    => ['1', '6'],
             'phone_number_lengths' => [9, 10, 8],
         ],
-        [
+        'YT' => [
             'alpha2'               => 'YT',
             'alpha3'               => 'MYT',
             'country_code'         => '262',
@@ -1284,7 +1266,7 @@ class data {
             'mobile_begin_with'    => ['639'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'NA' => [
             'alpha2'               => 'NA',
             'alpha3'               => 'NAM',
             'country_code'         => '264',
@@ -1292,15 +1274,15 @@ class data {
             'mobile_begin_with'    => ['60', '81', '82', '85'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'NC' => [
             'alpha2'               => 'NC',
             'alpha3'               => 'NCL',
             'country_code'         => '687',
             'country_name'         => 'New Caledonia',
-            'mobile_begin_with'    => ['7', '8', '9'],
+            'mobile_begin_with'    => ['5', '7', '8', '9'],
             'phone_number_lengths' => [6],
         ],
-        [
+        'NE' => [
             'alpha2'               => 'NE',
             'alpha3'               => 'NER',
             'country_code'         => '227',
@@ -1308,7 +1290,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'NF' => [
             'alpha2'               => 'NF',
             'alpha3'               => 'NFK',
             'country_code'         => '672',
@@ -1316,7 +1298,7 @@ class data {
             'mobile_begin_with'    => ['5', '8'],
             'phone_number_lengths' => [5],
         ],
-        [
+        'NG' => [
             'alpha2'               => 'NG',
             'alpha3'               => 'NGA',
             'country_code'         => '234',
@@ -1324,7 +1306,7 @@ class data {
             'mobile_begin_with'    => ['70', '80', '81', '90', '91'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'NI' => [
             'alpha2'               => 'NI',
             'alpha3'               => 'NIC',
             'country_code'         => '505',
@@ -1332,7 +1314,7 @@ class data {
             'mobile_begin_with'    => ['7', '8'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'NU' => [
             'alpha2'               => 'NU',
             'alpha3'               => 'NIU',
             'country_code'         => '683',
@@ -1340,7 +1322,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [4],
         ],
-        [
+        'NL' => [
             'alpha2'               => 'NL',
             'alpha3'               => 'NLD',
             'country_code'         => '31',
@@ -1348,7 +1330,7 @@ class data {
             'mobile_begin_with'    => ['6', '97'],
             'phone_number_lengths' => [9, 11],
         ],
-        [
+        'NO' => [
             'alpha2'               => 'NO',
             'alpha3'               => 'NOR',
             'country_code'         => '47',
@@ -1356,7 +1338,7 @@ class data {
             'mobile_begin_with'    => ['4', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'NP' => [
             'alpha2'               => 'NP',
             'alpha3'               => 'NPL',
             'country_code'         => '977',
@@ -1364,7 +1346,7 @@ class data {
             'mobile_begin_with'    => ['97', '98'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'NR' => [
             'alpha2'               => 'NR',
             'alpha3'               => 'NRU',
             'country_code'         => '674',
@@ -1372,7 +1354,7 @@ class data {
             'mobile_begin_with'    => ['555'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'NZ' => [
             'alpha2'               => 'NZ',
             'alpha3'               => 'NZL',
             'country_code'         => '64',
@@ -1380,15 +1362,15 @@ class data {
             'mobile_begin_with'    => ['2'],
             'phone_number_lengths' => [8, 9, 10],
         ],
-        [
+        'OM' => [
             'alpha2'               => 'OM',
             'alpha3'               => 'OMN',
             'country_code'         => '968',
             'country_name'         => 'Oman',
-            'mobile_begin_with'    => ['9'],
+            'mobile_begin_with'    => ['7', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'PK' => [
             'alpha2'               => 'PK',
             'alpha3'               => 'PAK',
             'country_code'         => '92',
@@ -1396,7 +1378,7 @@ class data {
             'mobile_begin_with'    => ['3'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'PA' => [
             'alpha2'               => 'PA',
             'alpha3'               => 'PAN',
             'country_code'         => '507',
@@ -1404,8 +1386,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'PE' => [
             'alpha2'               => 'PE',
             'alpha3'               => 'PER',
             'country_code'         => '51',
@@ -1413,7 +1394,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'PH' => [
             'alpha2'               => 'PH',
             'alpha3'               => 'PHL',
             'country_code'         => '63',
@@ -1421,7 +1402,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'PW' => [
             'alpha2'               => 'PW',
             'alpha3'               => 'PLW',
             'country_code'         => '680',
@@ -1429,7 +1410,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [7],
         ],
-        [
+        'PG' => [
             'alpha2'               => 'PG',
             'alpha3'               => 'PNG',
             'country_code'         => '675',
@@ -1437,7 +1418,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'PL' => [
             'alpha2'               => 'PL',
             'alpha3'               => 'POL',
             'country_code'         => '48',
@@ -1445,7 +1426,7 @@ class data {
             'mobile_begin_with'    => ['4', '5', '6', '7', '8'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'PR' => [
             'alpha2'               => 'PR',
             'alpha3'               => 'PRI',
             'country_code'         => '1',
@@ -1453,8 +1434,7 @@ class data {
             'mobile_begin_with'    => ['787', '939'],
             'phone_number_lengths' => [10],
         ],
-
-        [
+        'PT' => [
             'alpha2'               => 'PT',
             'alpha3'               => 'PRT',
             'country_code'         => '351',
@@ -1462,7 +1442,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'PY' => [
             'alpha2'               => 'PY',
             'alpha3'               => 'PRY',
             'country_code'         => '595',
@@ -1470,7 +1450,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'PS' => [
             'alpha2'               => 'PS',
             'alpha3'               => 'PSE',
             'country_code'         => '970',
@@ -1478,7 +1458,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'PF' => [
             'alpha2'               => 'PF',
             'alpha3'               => 'PYF',
             'country_code'         => '689',
@@ -1486,7 +1466,7 @@ class data {
             'mobile_begin_with'    => ['8'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'QA' => [
             'alpha2'               => 'QA',
             'alpha3'               => 'QAT',
             'country_code'         => '974',
@@ -1494,7 +1474,7 @@ class data {
             'mobile_begin_with'    => ['3', '5', '6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'RE' => [
             'alpha2'               => 'RE',
             'alpha3'               => 'REU',
             'country_code'         => '262',
@@ -1502,7 +1482,7 @@ class data {
             'mobile_begin_with'    => ['692', '693'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'RO' => [
             'alpha2'               => 'RO',
             'alpha3'               => 'ROU',
             'country_code'         => '40',
@@ -1510,7 +1490,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'RU' => [
             'alpha2'               => 'RU',
             'alpha3'               => 'RUS',
             'country_code'         => '7',
@@ -1518,7 +1498,7 @@ class data {
             'mobile_begin_with'    => ['9', '495', '498', '499', '835'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'RW' => [
             'alpha2'               => 'RW',
             'alpha3'               => 'RWA',
             'country_code'         => '250',
@@ -1526,7 +1506,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SA' => [
             'alpha2'               => 'SA',
             'alpha3'               => 'SAU',
             'country_code'         => '966',
@@ -1534,7 +1514,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SD' => [
             'alpha2'               => 'SD',
             'alpha3'               => 'SDN',
             'country_code'         => '249',
@@ -1542,7 +1522,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SS' => [
             'alpha2'               => 'SS',
             'alpha3'               => 'SSD',
             'country_code'         => '211',
@@ -1550,7 +1530,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SN' => [
             'alpha2'               => 'SN',
             'alpha3'               => 'SEN',
             'country_code'         => '221',
@@ -1558,7 +1538,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SG' => [
             'alpha2'               => 'SG',
             'alpha3'               => 'SGP',
             'country_code'         => '65',
@@ -1566,8 +1546,7 @@ class data {
             'mobile_begin_with'    => ['8', '9'],
             'phone_number_lengths' => [8],
         ],
-
-        [
+        'SH' => [
             'alpha2'               => 'SH',
             'alpha3'               => 'SHN',
             'country_code'         => '290',
@@ -1575,7 +1554,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [4],
         ],
-        [
+        'SJ' => [
             'alpha2'               => 'SJ',
             'alpha3'               => 'SJM',
             'country_code'         => '47',
@@ -1583,7 +1562,7 @@ class data {
             'mobile_begin_with'    => ['79'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'SB' => [
             'alpha2'               => 'SB',
             'alpha3'               => 'SLB',
             'country_code'         => '677',
@@ -1591,15 +1570,17 @@ class data {
             'mobile_begin_with'    => ['7', '8'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'SL' => [
             'alpha2'               => 'SL',
             'alpha3'               => 'SLE',
             'country_code'         => '232',
             'country_name'         => 'Sierra Leone',
-            'mobile_begin_with'    => ['21', '25', '30', '33', '34', '40', '44', '50', '55', '76', '77', '78', '79', '88'],
+            'mobile_begin_with'    => [
+                    '21', '25', '30', '33', '34', '40', '44', '50', '55', '76', '77', '78', '79', '88',
+                ],
             'phone_number_lengths' => [8],
         ],
-        [
+        'SV' => [
             'alpha2'               => 'SV',
             'alpha3'               => 'SLV',
             'country_code'         => '503',
@@ -1607,7 +1588,7 @@ class data {
             'mobile_begin_with'    => ['6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'SM' => [
             'alpha2'               => 'SM',
             'alpha3'               => 'SMR',
             'country_code'         => '378',
@@ -1615,7 +1596,7 @@ class data {
             'mobile_begin_with'    => ['3', '6'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'SO' => [
             'alpha2'               => 'SO',
             'alpha3'               => 'SOM',
             'country_code'         => '252',
@@ -1623,7 +1604,7 @@ class data {
             'mobile_begin_with'    => ['61', '62', '63', '65', '66', '68', '69', '71', '90'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SX' => [
             'alpha2'               => 'SX',
             'alpha3'               => 'SXM',
             'country_code'         => '1',
@@ -1631,7 +1612,7 @@ class data {
             'mobile_begin_with'    => ['721'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'PM' => [
             'alpha2'               => 'PM',
             'alpha3'               => 'SPM',
             'country_code'         => '508',
@@ -1639,7 +1620,7 @@ class data {
             'mobile_begin_with'    => ['55', '41'],
             'phone_number_lengths' => [6],
         ],
-        [
+        'RS' => [
             'alpha2'               => 'RS',
             'alpha3'               => 'SRB',
             'country_code'         => '381',
@@ -1647,7 +1628,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8, 9],
         ],
-        [
+        'ST' => [
             'alpha2'               => 'ST',
             'alpha3'               => 'STP',
             'country_code'         => '239',
@@ -1655,7 +1636,7 @@ class data {
             'mobile_begin_with'    => ['98', '99'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'SR' => [
             'alpha2'               => 'SR',
             'alpha3'               => 'SUR',
             'country_code'         => '597',
@@ -1663,7 +1644,7 @@ class data {
             'mobile_begin_with'    => ['6', '7', '8'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'SK' => [
             'alpha2'               => 'SK',
             'alpha3'               => 'SVK',
             'country_code'         => '421',
@@ -1671,7 +1652,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SI' => [
             'alpha2'               => 'SI',
             'alpha3'               => 'SVN',
             'country_code'         => '386',
@@ -1679,7 +1660,7 @@ class data {
             'mobile_begin_with'    => ['3', '4', '5', '6', '7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'SE' => [
             'alpha2'               => 'SE',
             'alpha3'               => 'SWE',
             'country_code'         => '46',
@@ -1687,7 +1668,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'SZ' => [
             'alpha2'               => 'SZ',
             'alpha3'               => 'SWZ',
             'country_code'         => '268',
@@ -1695,7 +1676,7 @@ class data {
             'mobile_begin_with'    => ['76', '77', '78', '79'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'SC' => [
             'alpha2'               => 'SC',
             'alpha3'               => 'SYC',
             'country_code'         => '248',
@@ -1703,7 +1684,7 @@ class data {
             'mobile_begin_with'    => ['2'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'SY' => [
             'alpha2'               => 'SY',
             'alpha3'               => 'SYR',
             'country_code'         => '963',
@@ -1711,8 +1692,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-
-        [
+        'TC' => [
             'alpha2'               => 'TC',
             'alpha3'               => 'TCA',
             'country_code'         => '1',
@@ -1720,7 +1700,7 @@ class data {
             'mobile_begin_with'    => ['6492', '6493', '6494'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'TD' => [
             'alpha2'               => 'TD',
             'alpha3'               => 'TCD',
             'country_code'         => '235',
@@ -1728,7 +1708,7 @@ class data {
             'mobile_begin_with'    => ['6', '7', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'TG' => [
             'alpha2'               => 'TG',
             'alpha3'               => 'TGO',
             'country_code'         => '228',
@@ -1736,7 +1716,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'TH' => [
             'alpha2'               => 'TH',
             'alpha3'               => 'THA',
             'country_code'         => '66',
@@ -1744,7 +1724,7 @@ class data {
             'mobile_begin_with'    => ['6', '8', '9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'TJ' => [
             'alpha2'               => 'TJ',
             'alpha3'               => 'TJK',
             'country_code'         => '992',
@@ -1752,7 +1732,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'TK' => [
             'alpha2'               => 'TK',
             'alpha3'               => 'TKL',
             'country_code'         => '690',
@@ -1760,7 +1740,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [4],
         ],
-        [
+        'TM' => [
             'alpha2'               => 'TM',
             'alpha3'               => 'TKM',
             'country_code'         => '993',
@@ -1768,7 +1748,7 @@ class data {
             'mobile_begin_with'    => ['6'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'TL' => [
             'alpha2'               => 'TL',
             'alpha3'               => 'TLS',
             'country_code'         => '670',
@@ -1776,7 +1756,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'TO' => [
             'alpha2'               => 'TO',
             'alpha3'               => 'TON',
             'country_code'         => '676',
@@ -1784,7 +1764,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [5],
         ],
-        [
+        'TT' => [
             'alpha2'               => 'TT',
             'alpha3'               => 'TTO',
             'country_code'         => '1',
@@ -1792,7 +1772,7 @@ class data {
             'mobile_begin_with'    => ['868'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'TN' => [
             'alpha2'               => 'TN',
             'alpha3'               => 'TUN',
             'country_code'         => '216',
@@ -1800,7 +1780,7 @@ class data {
             'mobile_begin_with'    => ['2', '4', '5', '9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'TR' => [
             'alpha2'               => 'TR',
             'alpha3'               => 'TUR',
             'country_code'         => '90',
@@ -1808,7 +1788,7 @@ class data {
             'mobile_begin_with'    => ['5'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'TV' => [
             'alpha2'               => 'TV',
             'alpha3'               => 'TUV',
             'country_code'         => '688',
@@ -1816,7 +1796,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [5],
         ],
-        [
+        'TW' => [
             'alpha2'               => 'TW',
             'alpha3'               => 'TWN',
             'country_code'         => '886',
@@ -1824,7 +1804,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'TZ' => [
             'alpha2'               => 'TZ',
             'alpha3'               => 'TZA',
             'country_code'         => '255',
@@ -1832,7 +1812,7 @@ class data {
             'mobile_begin_with'    => ['7', '6'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'UG' => [
             'alpha2'               => 'UG',
             'alpha3'               => 'UGA',
             'country_code'         => '256',
@@ -1840,7 +1820,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'UA' => [
             'alpha2'               => 'UA',
             'alpha3'               => 'UKR',
             'country_code'         => '380',
@@ -1848,8 +1828,7 @@ class data {
             'mobile_begin_with'    => ['39', '50', '63', '66', '67', '68', '73', '75', '77', '9'],
             'phone_number_lengths' => [9],
         ],
-
-        [
+        'UY' => [
             'alpha2'               => 'UY',
             'alpha3'               => 'URY',
             'country_code'         => '598',
@@ -1857,7 +1836,7 @@ class data {
             'mobile_begin_with'    => ['9'],
             'phone_number_lengths' => [8],
         ],
-        [
+        'UZ' => [
             'alpha2'               => 'UZ',
             'alpha3'               => 'UZB',
             'country_code'         => '998',
@@ -1865,8 +1844,7 @@ class data {
             'mobile_begin_with'    => ['9', '88', '33'],
             'phone_number_lengths' => [9],
         ],
-
-        [
+        'VC' => [
             'alpha2'               => 'VC',
             'alpha3'               => 'VCT',
             'country_code'         => '1',
@@ -1874,7 +1852,7 @@ class data {
             'mobile_begin_with'    => ['784'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'VE' => [
             'alpha2'               => 'VE',
             'alpha3'               => 'VEN',
             'country_code'         => '58',
@@ -1882,7 +1860,7 @@ class data {
             'mobile_begin_with'    => ['4'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'VG' => [
             'alpha2'               => 'VG',
             'alpha3'               => 'VGB',
             'country_code'         => '1',
@@ -1890,7 +1868,7 @@ class data {
             'mobile_begin_with'    => ['284'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'VI' => [
             'alpha2'               => 'VI',
             'alpha3'               => 'VIR',
             'country_code'         => '1',
@@ -1898,7 +1876,7 @@ class data {
             'mobile_begin_with'    => ['340'],
             'phone_number_lengths' => [10],
         ],
-        [
+        'VN' => [
             'alpha2'               => 'VN',
             'alpha3'               => 'VNM',
             'country_code'         => '84',
@@ -1906,7 +1884,7 @@ class data {
             'mobile_begin_with'    => ['8', '9', '3', '7', '5'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'VU' => [
             'alpha2'               => 'VU',
             'alpha3'               => 'VUT',
             'country_code'         => '678',
@@ -1914,7 +1892,7 @@ class data {
             'mobile_begin_with'    => ['5', '7'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'WF' => [
             'alpha2'               => 'WF',
             'alpha3'               => 'WLF',
             'country_code'         => '681',
@@ -1922,7 +1900,7 @@ class data {
             'mobile_begin_with'    => [],
             'phone_number_lengths' => [6],
         ],
-        [
+        'WS' => [
             'alpha2'               => 'WS',
             'alpha3'               => 'WSM',
             'country_code'         => '685',
@@ -1930,7 +1908,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [7],
         ],
-        [
+        'YE' => [
             'alpha2'               => 'YE',
             'alpha3'               => 'YEM',
             'country_code'         => '967',
@@ -1938,7 +1916,7 @@ class data {
             'mobile_begin_with'    => ['7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'ZA' => [
             'alpha2'               => 'ZA',
             'alpha3'               => 'ZAF',
             'country_code'         => '27',
@@ -1946,7 +1924,7 @@ class data {
             'mobile_begin_with'    => ['1', '2', '3', '4', '5', '6', '7', '8'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'ZM' => [
             'alpha2'               => 'ZM',
             'alpha3'               => 'ZMB',
             'country_code'         => '260',
@@ -1954,7 +1932,7 @@ class data {
             'mobile_begin_with'    => ['9', '7'],
             'phone_number_lengths' => [9],
         ],
-        [
+        'ZW' => [
             'alpha2'               => 'ZW',
             'alpha3'               => 'ZWE',
             'country_code'         => '263',
