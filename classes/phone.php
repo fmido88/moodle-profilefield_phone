@@ -35,9 +35,10 @@ class phone {
      * @param  \MoodleQuickForm $mform
      * @param  string           $element
      * @param  string           $visiblename
-     * @param  mixed            $required
-     * @param  null|mixed       $defaultcountry
-     * @param  mixed            $fullstring
+     * @param  bool             $required
+     * @param  null|string|int  $defaultcountry
+     * @param  bool             $fullstring
+     * @param  bool             $forcecountry
      * @return void
      */
     public static function add_phone_to_form(
@@ -59,7 +60,13 @@ class phone {
             'class'             => 'country-select-autocomplete',
         ];
         $autocomplete = $mform->createElement('autocomplete', 'code', '', self::get_country_codes_options($fullstring), $options);
-        $phoneinput = $mform->createElement('text', 'number', '', ['size' => 20, 'placeholder' => $visiblename, 'class' => 'phone-number-input']);
+
+        $phoneinputattr = [
+            'size'        => 20,
+            'placeholder' => $visiblename,
+            'class'       => 'phone-number-input',
+        ];
+        $phoneinput = $mform->createElement('text', 'number', '', $phoneinputattr);
 
         $group = [$autocomplete, $phoneinput];
 
@@ -187,7 +194,6 @@ class phone {
     /**
      * Get an array of country codes to be used in forms.
      * @param  bool     $fullstring
-     * @param  bool     $fortemplate
      * @return string[]
      */
     public static function get_country_codes_options($fullstring = false) {
@@ -350,7 +356,7 @@ class phone {
         ];
 
         foreach ($codes as $code) {
-            if ($data = self::validate_number($code, substr($phone,strlen($code)), $ismobile, true)) {
+            if ($data = self::validate_number($code, substr($phone, strlen($code)), $ismobile, true)) {
                 return $data;
             }
         }

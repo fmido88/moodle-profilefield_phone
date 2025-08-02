@@ -25,11 +25,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 $string['associatefield'] = 'Associate with profile field';
+$string['code'] = 'Code';
+$string['countrycode'] = 'Country code';
 $string['fieldalreadyassociated'] = 'This field already associated with {$a} field';
+$string['invaliddata'] = 'Invalid data';
+$string['invalidnumber'] = 'Invalid number';
 $string['ismobile'] = 'Is mobile';
 $string['pluginname'] = 'Phone';
 $string['privacy:metadata'] = 'Profile field phone plugin does not store personal data, nor does it export personal data to an external location.';
-$string['code'] = 'Code';
-$string['countrycode'] = 'Country code';
-$string['invaliddata'] = 'Invalid data';
-$string['invalidnumber'] = 'Invalid number';
