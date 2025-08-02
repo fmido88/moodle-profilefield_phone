@@ -119,5 +119,3 @@ class profile_define_phone extends profile_define_base {
         return $data;
     }
 }
-
-
