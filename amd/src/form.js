@@ -22,6 +22,7 @@
  */
 
 import $ from 'jquery';
+
 /** @type {JQuery<HTMLElement>} */
 let groupContainer;
 /** @type {JQuery<HTMLElement>} */
@@ -59,6 +60,8 @@ function getPhoneCode(country) {
 
 /**
  * Identify the search input.
+ * The autocomplete element in MoodleQuickForm take a while
+ * to get rendered by js and the search input to be in the DOM.
  */
 function identifySearchInput() {
     clearTimeout(searchTimeout);
@@ -72,11 +75,13 @@ function identifySearchInput() {
     }, 100);
 }
 
-export const init = function(name) {
-    groupContainer = $('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
+export const init = function(name, formid) {
+    let mform = $('form#' + formid);
+    groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
     hiddenSelect = groupContainer.find('select[name="' + name + '[code]"]');
 
     // Ugly hack to remove flex-wrap class from the group.
+    // This prevent the elements code and number to be wrapped behind each others.
     groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
     identifySearchInput();
 };

@@ -108,7 +108,10 @@ class phone {
             }
         }
 
-        $PAGE->requires->js_call_amd('profilefield_phone/form', 'init', ['name' => $element]);
+        $PAGE->requires->js_call_amd('profilefield_phone/form', 'init', [
+            'name' => $element,
+            'formid' => $mform->getAttribute('id'),
+        ]);
     }
     /**
      * Summary of set_default_phone_form
