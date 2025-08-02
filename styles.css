@@ -16,21 +16,43 @@
 
 .profilefield_phone.phone-input-group .form-autocomplete-input {
     max-width: 80px;
+}
+
+[dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-input {
     margin-right: -10px;
 }
 
-.profilefield_phone.phone-input-group .form-autocomplete-downarrow {
+[dir="rtl"] .profilefield_phone.phone-input-group .form-autocomplete-input {
+    margin-left: -10px;
+}
+
+[dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-downarrow {
     right: 0;
 }
 
+[dir="rtl"] .profilefield_phone.phone-input-group .form-autocomplete-downarrow {
+    left: 0;
+}
+
 .profilefield_phone.phone-input-group .form-autocomplete-input input {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     max-width: 80px;
     /* stylelint-disable-next-line declaration-no-important */
     min-width: 60px !important;
+}
+[dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     margin-right: 0;
     padding-right: 0;
+}
+
+[dir="rtl"] .profilefield_phone.phone-input-group .form-autocomplete-input input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 0;
+    padding-left: 0;
+    direction: ltr;
+    text-align: right;
 }
 
 .profilefield_phone.phone-input-group .form-autocomplete-input input::placeholder {
@@ -39,17 +61,11 @@
     color: rgb(0, 0, 0);
 }
 
-.profilefield_phone.phone-input-group .phone-number-input {
+[dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input {
     flex-grow: 1;
 }
 
-.profilefield_phone.phone-input-group .phone-number-input input {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    max-width: calc(100% - 60px);
-}
-
-.profilefield_phone.phone-input-group .phone-number-input input {
+[dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input input {
     max-width: calc(100% - 60px);
 }
 
@@ -58,8 +74,19 @@ form.full-width-labels .profilefield_phone.phone-input-group .phone-number-input
     max-width: unset;
 }
 
+[dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+[dir="rtl"]  .profilefield_phone.phone-input-group .phone-number-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    text-align: left;
+}
+
 @media screen and (min-width: 768px) {
-    .profilefield_phone.phone-input-group .phone-number-input input {
+    [dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input input {
         margin-left: -20px;
     }
 }

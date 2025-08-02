@@ -17,7 +17,8 @@
 namespace profilefield_phone;
 
 /**
- * Class phone
+ * Helper class to validate phone number data and handle rendering its field
+ * in mform.
  *
  * @package     profilefield_phone
  * @copyright   2024 Mohammad Farouk <phun.for.physics@gmail.com>
@@ -33,12 +34,12 @@ class phone {
     /**
      * Adding phone elements to a moodle form.
      * @param  \MoodleQuickForm $mform
-     * @param  string           $element
-     * @param  string           $visiblename
-     * @param  bool             $required
-     * @param  null|string|int  $defaultcountry
-     * @param  bool             $fullstring
-     * @param  bool             $forcecountry
+     * @param  string           $element The element name in the form.
+     * @param  string           $visiblename The visible name of the form.
+     * @param  bool             $required Add required rule to the element.
+     * @param  null|string|int  $defaultcountry The default country.
+     * @param  bool             $fullstring If to display the country names in full string names.
+     * @param  bool             $forcecountry Force specific country and the user cannot change it.
      * @return void
      */
     public static function add_phone_to_form(
@@ -70,7 +71,8 @@ class phone {
 
         $group = [$autocomplete, $phoneinput];
 
-        if ($PAGE->theme->get_rtl_mode()) {
+        // Phone numbers always ltr.
+        if ($PAGE->theme->get_rtl_mode() || right_to_left()) {
             $group = array_reverse($group);
         }
 
@@ -114,7 +116,8 @@ class phone {
         ]);
     }
     /**
-     * Summary of set_default_phone_form
+     * Set the form default values from the submitted data.
+     *
      * @param \MoodleQuickForm $mform
      * @param string $element
      * @return void
@@ -143,6 +146,8 @@ class phone {
 
         if (!empty($phone)) {
             $mform->setDefault($element, $phone);
+            $mform->setDefault("{$element}[code]", $phone['code'] ?? '');
+            $mform->setDefault("{$element}[number]", $phone['number'] ?? '');
         }
     }
     /**
