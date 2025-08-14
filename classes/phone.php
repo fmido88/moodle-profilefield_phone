@@ -78,6 +78,7 @@ class phone {
             'placeholder'       => get_string('code', 'profilefield_phone'),
             'class'             => 'country-select-autocomplete',
         ];
+
         $autocomplete = $mform->createElement('autocomplete', 'code', '', self::get_country_codes_options($fullstring), $options);
 
         $phoneinputattr = [
@@ -100,14 +101,16 @@ class phone {
 
         if ($required) {
             $strrequired = get_string('required');
-            $rules       = [
-                'code' => [
-                    [$strrequired, 'required', null, 'client'],
-                ],
+            $rules = [
                 'number' => [
                     [$strrequired, 'required', null, 'client'],
                 ],
             ];
+            if (!$forcecountry) {
+                 $rules['code'] = [
+                    [$strrequired, 'required', null, 'client'],
+                 ];
+            }
             $mform->addGroupRule($element, $rules);
         }
 
@@ -120,9 +123,11 @@ class phone {
 
             if (strlen($defaultcountry) === 2) {
                 if ($forcecountry) {
-                    $mform->setConstant($element, ['code' => $defaultcountry]);
+                    $mform->setDefault($element, ['code' => $defaultcountry]);
                     $autocomplete->freeze();
                     $autocomplete->setPersistantFreeze(false);
+                    $mform->addElement('hidden', $element . '[code]', $defaultcountry);
+                    $mform->setType($element . '[code]', PARAM_ALPHA);
                 } else {
                     $mform->setDefault($element . '[code]', $defaultcountry);
                 }
@@ -437,6 +442,7 @@ class phone {
             }
 
             if ($ismobile) {
+                $originalvalid = (bool)$valid;
                 $valid = false;
 
                 foreach ($counrtydata['mobile_begin_with'] as $prefix) {
@@ -446,6 +452,7 @@ class phone {
                     }
                 }
                 !$valid ? ($reasons[] = self::REASON_MOBILE_START) : null;
+                $valid = $valid && $originalvalid;
             }
         }
 

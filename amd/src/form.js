@@ -70,6 +70,12 @@ function identifySearchInput() {
         if (searchInput.length > 0) {
             register();
         } else {
+            let freezed = groupContainer.find('span[data-fieldtype="autocomplete"]');
+            if (freezed.length > 0 && freezed.find('select').length === 0) {
+                freezed.text(freezed.text().match(/\+\d+/g).shift());
+                return;
+            }
+
             identifySearchInput();
         }
     }, 100);

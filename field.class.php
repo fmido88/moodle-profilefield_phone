@@ -193,16 +193,16 @@ class profile_field_phone extends profile_field_base {
      * @param \MoodleQuickForm $mform Moodle form instance
      */
     public function edit_field_set_default($mform) {
-        global $CFG;
 
+        $defcountry = $this->alpha2 ?? self::get_default_country($this->userid);
         if (!empty($this->data)) {
             $data = [
-                'code'   => $this->alpha2 ?? self::get_default_country($this->userid),
+                'code'   => $defcountry,
                 'number' => $this->number,
             ];
         } else if (isset($this->field->defaultdata)) {
             $key     = $this->field->defaultdata;
-            $default = self::get_data_from_string($key);
+            $default = self::get_data_from_string($key, $defcountry);
 
             if (!empty($default['number'])) {
                 $data = [

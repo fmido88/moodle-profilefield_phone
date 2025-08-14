@@ -21,11 +21,15 @@
 [dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-input {
     margin-right: -10px;
 }
-
+[dir="ltr"] .profilefield_phone.phone-input-group .country-select-autocomplete span[data-fieldtype="autocomplete"] {
+    margin-right: 10px;
+}
 [dir="rtl"] .profilefield_phone.phone-input-group .form-autocomplete-input {
     margin-left: -10px;
 }
-
+[dir="rtl"] .profilefield_phone.phone-input-group .country-select-autocomplete span[data-fieldtype="autocomplete"] {
+    margin-left: 10px;
+}
 [dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-downarrow {
     right: 0;
 }
@@ -34,7 +38,8 @@
     left: 0;
 }
 
-.profilefield_phone.phone-input-group .form-autocomplete-input input {
+.profilefield_phone.phone-input-group .form-autocomplete-input input,
+.profilefield_phone.phone-input-group .country-select-autocomplete span[data-fieldtype="autocomplete"] {
     max-width: 80px;
     /* stylelint-disable-next-line declaration-no-important */
     min-width: 60px !important;
@@ -87,6 +92,6 @@ form.full-width-labels .profilefield_phone.phone-input-group .phone-number-input
 
 @media screen and (min-width: 768px) {
     [dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input input {
-        margin-left: -20px;
+        margin-left: -1rem;
     }
 }
