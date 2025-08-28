@@ -23,49 +23,50 @@
 
 import $ from 'jquery';
 
-/** @type {JQuery<HTMLElement>} */
-let groupContainer;
-/** @type {JQuery<HTMLElement>} */
-let hiddenSelect;
-/** @type {JQuery<HTMLElement>} */
-let searchInput;
-/** @type {String} */
-let currentSelectedValue;
-/** @type {NodeJS.Timeout} */
-let searchTimeout;
-/**
- * Register the event listeners.
- */
-function register() {
-    currentSelectedValue = hiddenSelect.val();
-    if (currentSelectedValue) {
-        searchInput.attr('placeholder', getPhoneCode(currentSelectedValue));
+export const init = function(name, formid) {
+    /** @type {NodeJS.Timeout} */
+    let searchTimeout;
+    /** @type {JQuery<HTMLElement>} */
+    let groupContainer;
+    /** @type {JQuery<HTMLElement>} */
+    let hiddenSelect;
+    /** @type {JQuery<HTMLElement>} */
+    let searchInput;
+    /** @type {String} */
+    let currentSelectedValue;
+
+    /**
+     * Register the event listeners.
+     */
+    function register() {
+        currentSelectedValue = hiddenSelect.val();
+        if (currentSelectedValue) {
+            searchInput.attr('placeholder', getPhoneCode(currentSelectedValue));
+        }
+
+        hiddenSelect.on('change', function() {
+            currentSelectedValue = $(this).val();
+            let code = getPhoneCode(currentSelectedValue);
+            searchInput.attr('placeholder', code);
+        });
     }
 
-    hiddenSelect.on('change', function() {
-        currentSelectedValue = $(this).val();
-        let code = getPhoneCode(currentSelectedValue);
-        searchInput.attr('placeholder', code);
-    });
-}
+    /**
+     * Get the phone code from the country code.
+     * @param {String} country
+     */
+    function getPhoneCode(country) {
+        let text = hiddenSelect.find('option[value="' + country + '"]').text();
+        return text.match(/\+\d+/g).shift();
+    }
 
-/**
- * Get the phone code from the country code.
- * @param {String} country
- */
-function getPhoneCode(country) {
-    let text = hiddenSelect.find('option[value="' + country + '"]').text();
-    return text.match(/\+\d+/g).shift();
-}
-
-/**
- * Identify the search input.
- * The autocomplete element in MoodleQuickForm take a while
- * to get rendered by js and the search input to be in the DOM.
- */
-function identifySearchInput() {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(function() {
+    /**
+     * Identify the search input.
+     * The autocomplete element in MoodleQuickForm take a while
+     * to get rendered by js and the search input to be in the DOM.
+     */
+    function identifySearchInput() {
+        clearTimeout(searchTimeout);
         searchInput = groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
         if (searchInput.length > 0) {
             register();
@@ -76,18 +77,17 @@ function identifySearchInput() {
                 return;
             }
 
-            identifySearchInput();
+            searchTimeout = setTimeout(identifySearchInput, 100);
         }
-    }, 100);
-}
+    }
 
-export const init = function(name, formid) {
     let mform = $('form#' + formid);
     groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
     hiddenSelect = groupContainer.find('select[name="' + name + '[code]"]');
 
     // Ugly hack to remove flex-wrap class from the group.
-    // This prevent the elements code and number to be wrapped behind each others.
+    // This prevent the elements code and number to be wrapped under each others.
     groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
+
     identifySearchInput();
 };

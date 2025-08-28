@@ -63,7 +63,7 @@
 .profilefield_phone.phone-input-group .form-autocomplete-input input::placeholder {
     font-weight: bold;
     opacity: 1;
-    color: rgb(0, 0, 0);
+    color: inherit;
 }
 
 [dir="ltr"] .profilefield_phone.phone-input-group .phone-number-input {
