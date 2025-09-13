@@ -23,31 +23,49 @@
 
 import $ from 'jquery';
 
-export const init = function(name, formid) {
+class PhoneForm {
     /** @type {NodeJS.Timeout} */
-    let searchTimeout;
+    searchTimeout;
     /** @type {JQuery<HTMLElement>} */
-    let groupContainer;
+    groupContainer;
     /** @type {JQuery<HTMLElement>} */
-    let hiddenSelect;
+    hiddenSelect;
     /** @type {JQuery<HTMLElement>} */
-    let searchInput;
+    searchInput;
     /** @type {String} */
-    let currentSelectedValue;
+    currentSelectedValue;
+
+    /**
+     * Create a phone form element class to handle phone element.
+     * @param {String} name The phone element name.
+     * @param {String} formid The mform id contains the element.
+     */
+    constructor(name, formid) {
+        let mform = $('form#' + formid);
+        this.groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
+        this.hiddenSelect = this.groupContainer.find('select[name="' + name + '[code]"]');
+
+        // Ugly hack to remove flex-wrap class from the group.
+        // This prevent the elements code and number to be wrapped under each others.
+        this.groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
+
+        this.identifySearchInput();
+    }
 
     /**
      * Register the event listeners.
      */
-    function register() {
-        currentSelectedValue = hiddenSelect.val();
-        if (currentSelectedValue) {
-            searchInput.attr('placeholder', getPhoneCode(currentSelectedValue));
+    register() {
+        this.currentSelectedValue = this.hiddenSelect.val();
+        if (this.currentSelectedValue) {
+            this.searchInput.attr('placeholder', this.getPhoneCode(this.currentSelectedValue));
         }
 
-        hiddenSelect.on('change', function() {
-            currentSelectedValue = $(this).val();
-            let code = getPhoneCode(currentSelectedValue);
-            searchInput.attr('placeholder', code);
+        let self = this;
+        this.hiddenSelect.on('change', function() {
+            self.currentSelectedValue = $(this).val();
+            let code = self.getPhoneCode(self.currentSelectedValue);
+            self.searchInput.attr('placeholder', code);
         });
     }
 
@@ -55,8 +73,8 @@ export const init = function(name, formid) {
      * Get the phone code from the country code.
      * @param {String} country
      */
-    function getPhoneCode(country) {
-        let text = hiddenSelect.find('option[value="' + country + '"]').text();
+    getPhoneCode(country) {
+        let text = this.hiddenSelect.find('option[value="' + country + '"]').text();
         return text.match(/\+\d+/g).shift();
     }
 
@@ -65,29 +83,23 @@ export const init = function(name, formid) {
      * The autocomplete element in MoodleQuickForm take a while
      * to get rendered by js and the search input to be in the DOM.
      */
-    function identifySearchInput() {
-        clearTimeout(searchTimeout);
-        searchInput = groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
-        if (searchInput.length > 0) {
-            register();
+    identifySearchInput() {
+        clearTimeout(this.searchTimeout);
+        this.searchInput = this.groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
+        if (this.searchInput.length > 0) {
+            this.register();
         } else {
-            let freezed = groupContainer.find('span[data-fieldtype="autocomplete"]');
+            let freezed = this.groupContainer.find('span[data-fieldtype="autocomplete"]');
             if (freezed.length > 0 && freezed.find('select').length === 0) {
                 freezed.text(freezed.text().match(/\+\d+/g).shift());
                 return;
             }
 
-            searchTimeout = setTimeout(identifySearchInput, 100);
+            this.searchTimeout = setTimeout(this.identifySearchInput, 100);
         }
     }
+}
 
-    let mform = $('form#' + formid);
-    groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
-    hiddenSelect = groupContainer.find('select[name="' + name + '[code]"]');
-
-    // Ugly hack to remove flex-wrap class from the group.
-    // This prevent the elements code and number to be wrapped under each others.
-    groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
-
-    identifySearchInput();
+export const init = function(name, formid) {
+    new PhoneForm(name, formid);
 };
