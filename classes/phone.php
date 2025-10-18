@@ -476,6 +476,10 @@ class phone {
      */
     public static function validate_whole_number($phone, $ismobile = true) {
         $phone = self::normalize_number($phone);
+        if (empty($phone) || strlen($phone) < 4) {
+            return false;
+        }
+
         // Possible codes.
         $codes = [
             substr($phone, 0, 1),
