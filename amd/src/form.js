@@ -24,7 +24,7 @@
 import $ from 'jquery';
 
 class PhoneForm {
-    /** @type {NodeJS.Timeout} */
+    /** @type {Array<NodeJS.Timeout>} */
     searchTimeout;
     /** @type {JQuery<HTMLElement>} */
     groupContainer;
@@ -34,6 +34,10 @@ class PhoneForm {
     searchInput;
     /** @type {String} */
     currentSelectedValue;
+    /** @type {String} */
+    name;
+    /** @type {String} */
+    formid;
 
     /**
      * Create a phone form element class to handle phone element.
@@ -41,17 +45,31 @@ class PhoneForm {
      * @param {String} formid The mform id contains the element.
      */
     constructor(name, formid) {
-        let mform = $('form#' + formid);
-        this.groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + name + '"]');
-        this.hiddenSelect = this.groupContainer.find('select[name="' + name + '[code]"]');
+        this.name = name;
+        this.formid = formid;
+        timeoutFunction(this.identifyGroupCotainer.bind(this));
+    }
+
+    /**
+     * Identify the group container and hidden select element.
+     */
+    identifyGroupCotainer() {
+        let mform = $('form#' + this.formid);
+        this.groupContainer = mform.find('.profilefield_phone.phone-input-group.fitem[data-groupname="' + this.name + '"]');
+        if (this.groupContainer.length === 0) {
+            return false;
+        }
+
+        this.hiddenSelect = this.groupContainer.find('select[name="' + this.name + '[code]"]');
 
         // Ugly hack to remove flex-wrap class from the group.
         // This prevent the elements code and number to be wrapped under each others.
         this.groupContainer.find('div[data-fieldtype="group"] fieldset div.flex-wrap').removeClass('flex-wrap');
+        this.groupContainer.find('div.d-flex.align-items-center').removeClass('align-items-center');
 
-        this.identifySearchInput();
+        timeoutFunction(this.identifySearchInput.bind(this));
+        return true;
     }
-
     /**
      * Register the event listeners.
      */
@@ -88,16 +106,28 @@ class PhoneForm {
         this.searchInput = this.groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
         if (this.searchInput.length > 0) {
             this.register();
+            return true;
         } else {
             let freezed = this.groupContainer.find('span[data-fieldtype="autocomplete"]');
             if (freezed.length > 0 && freezed.find('select').length === 0) {
                 freezed.text(freezed.text().match(/\+\d+/g).shift());
-                return;
+                return true;
             }
-
-            this.searchTimeout = setTimeout(this.identifySearchInput, 100);
         }
+        return false;
     }
+}
+
+/**
+ * @param {Function} fun
+ */
+function timeoutFunction(fun) {
+    setTimeout(function() {
+        let done = fun();
+        if (!done) {
+            timeoutFunction(fun, 500);
+        }
+    });
 }
 
 export const init = function(name, formid) {

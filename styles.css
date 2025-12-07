@@ -19,7 +19,8 @@
 }
 
 [dir="ltr"] .profilefield_phone.phone-input-group .form-autocomplete-input {
-    margin-right: -10px;
+    /* stylelint-disable-next-line declaration-no-important */
+    margin-right: -10px !important;
 }
 [dir="ltr"] .profilefield_phone.phone-input-group .country-select-autocomplete span[data-fieldtype="autocomplete"] {
     margin-right: 10px;

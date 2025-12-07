@@ -66,7 +66,7 @@ class phone {
         $visiblename,
         $required = false,
         $defaultcountry = null,
-        $fullstring = false,
+        $fullstring = true,
         $forcecountry = false,
     ) {
         global $PAGE;
