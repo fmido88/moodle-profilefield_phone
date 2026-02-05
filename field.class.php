@@ -74,7 +74,7 @@ class profile_field_phone extends profile_field_base {
      * @param  ?string $defcountry The default country code.
      * @return array
      */
-    protected static function get_data_from_string($string, $defcountry = null) {
+    public static function get_data_from_string($string, $defcountry = null) {
         $numbers = explode('-', $string);
 
         $data = [
