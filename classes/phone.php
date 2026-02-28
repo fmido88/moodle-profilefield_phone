@@ -16,6 +16,10 @@
 
 namespace profilefield_phone;
 
+use core_text;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberType;
+
 /**
  * Helper class to validate phone number data and handle rendering its field
  * in mform.
@@ -346,6 +350,7 @@ class phone {
         $usecountry = false,
         &$reasons = []
     ) {
+
         $number = self::normalize_number($number);
 
         $code = trim($code ?? '');
@@ -353,16 +358,16 @@ class phone {
         if (!$usecountry || is_number($code) || strpos($code, '+') === 0) {
             $code    = self::normalize_number($code);
             $codekey = 'country_code';
-        } else if (strlen($code) === 2) {
+        } else if (\strlen($code) === 2) {
             $codekey = 'alpha2';
-        } else if (strlen($code) === 3) {
+        } else if (\strlen($code) === 3) {
             $codekey = 'alpha3';
         }
 
         $code = strtoupper((string)$code);
 
         if (empty($code) || empty($codekey)) {
-            $data = self::validate_whole_number($code . $number, $ismobile);
+            $data = self::validate_whole_number("{$code}{$number}", $ismobile);
 
             if (false === $data) {
                 $reasons[] = self::REASON_NO_MATCH;
@@ -375,6 +380,13 @@ class phone {
             }
 
             return true;
+        }
+
+        if ($codekey === 'alpha2') {
+            $validation = self::validate_number_by_util($number, $code, $ismobile);
+            if ($validation !== null) {
+                return !empty($validation) ? ($returndata ? $validation : true) : false;
+            }
         }
 
         if ($codekey === 'alpha2' && isset(self::data()[$code])) {
@@ -430,13 +442,13 @@ class phone {
         $counrtydata,
         $ismobile = true,
         &$reasons = []
-    ) {
+    ): bool {
         $valid = false;
 
         if ($code === $counrtydata[$codetype]) {
             $valid = true;
 
-            if (!in_array(strlen($number), $counrtydata['phone_number_lengths'], true)) {
+            if (!\in_array(\strlen($number), $counrtydata['phone_number_lengths'], true)) {
                 $valid     = false;
                 $reasons[] = self::REASON_NUMBER_LENGTH;
             }
@@ -446,7 +458,7 @@ class phone {
                 $valid = false;
 
                 foreach ($counrtydata['mobile_begin_with'] as $prefix) {
-                    if (substr($number, 0, strlen($prefix)) === $prefix) {
+                    if (substr($number, 0, \strlen($prefix)) === $prefix) {
                         $valid = true;
                         break;
                     }
@@ -464,8 +476,46 @@ class phone {
      * @param  string $phone
      * @return int
      */
-    public static function normalize_number($phone) {
+    public static function normalize_number(string $phone) {
         return (int)preg_replace('/[^0-9]/', '', $phone);
+    }
+
+    /**
+     * Validate the phone number by phone number utils class if existed.
+     * @param string $number
+     * @param ?string $defaultcountry
+     * @param bool $ismobile
+     * @return false|array|null array of phone data if valid, false for not valid or null for error or non-existance of the class.
+     */
+    public static function validate_number_by_util(string $number, ?string $defaultcountry, bool $ismobile = true): array|false|null {
+        $h = helper::get_helper();
+        if (empty($defaultcountry) && strpos($number, '+') !== 0 && strpos($number, '00') !== 0) {
+            $defaultcountry = self::get_default_country();
+        }
+
+        // Replace 00 by +.
+        if (strpos($number, '00') === 0) {
+            $number = '+' . core_text::substr($number, 2);
+        }
+
+        $phone = helper::parse($number, $defaultcountry);
+
+        if ($phone) {
+            $type = $ismobile ? PhoneNumberType::MOBILE : PhoneNumberType::FIXED_LINE_OR_MOBILE;
+            $valid = $h->isPossibleNumberForType($phone, $type);
+            if (!$valid) {
+                return false;
+            }
+            $data = [
+                'number'       => $phone->getNationalNumber(),
+                'country_code' => $phone->getCountryCode(),
+                'alpha2'       => $h->getRegionCodeForNumber($phone),
+                'formatted'    => $h->format($phone, PhoneNumberFormat::INTERNATIONAL),
+            ];
+            return $data;
+        }
+
+        return null;
     }
 
     /**
@@ -474,28 +524,57 @@ class phone {
      * @param  bool        $ismobile
      * @return array|false
      */
-    public static function validate_whole_number($phone, $ismobile = true) {
+    public static function validate_whole_number(string $phone, bool $ismobile = true) {
+        $validation = self::validate_number_by_util($phone, null, $ismobile);
+        if (null !== $validation) {
+            return $validation;
+        }
+
         $phone = self::normalize_number($phone);
-        if (empty($phone) || strlen($phone) < 4) {
+        if (empty($phone) || \strlen($phone) < 4) {
             return false;
         }
 
         // Possible codes.
         $codes = [
-            substr($phone, 0, 1),
-            substr($phone, 0, 2),
-            substr($phone, 0, 3),
+            core_text::substr($phone, 0, 1),
+            core_text::substr($phone, 0, 2),
+            core_text::substr($phone, 0, 3),
         ];
 
         foreach ($codes as $code) {
-            if ($data = self::validate_number($code, substr($phone, strlen($code)), $ismobile, true)) {
+            if ($data = self::validate_number($code, core_text::substr($phone, \strlen($code)), $ismobile, true)) {
                 return $data;
             }
         }
 
         return false;
     }
+    /**
+     * Get the default country code.
+     * @param int $userid The user id to extract the default country from.
+     * @return ?string
+     */
+    public static function get_default_country(int $userid = -1): ?string {
+        global $CFG, $USER, $DB;
 
+        if (isloggedin() && ($userid == $USER->id) && !empty($USER->country)) {
+            return $USER->country;
+        }
+
+        if (!empty($userid) && $userid > 0) {
+            $usercounrty = $DB->get_field('user', 'country', ['id' => $userid]);
+            if (!empty($usercounrty)) {
+                return $usercounrty;
+            }
+        }
+
+        if (!empty($CFG->country)) {
+            return $CFG->country;
+        }
+
+        return null;
+    }
     /**
      * Return an array with country data rules from the
      * country code.
@@ -508,9 +587,9 @@ class phone {
         if (!empty($counrtycode)) {
             $code = $counrtycode;
             $key  = 'country_code';
-        } else if (strlen($code) === 2) {
+        } else if (core_text::strlen($code) === 2) {
             $key = 'alpha2';
-        } else if (strlen($code) === 3) {
+        } else if (core_text::strlen($code) === 3) {
             $key = 'alpha3';
         } else {
             return null;
@@ -535,7 +614,7 @@ class phone {
      * Array with all possible data.
      * @return array[]
      */
-    protected static function data() {
+    protected static function data(): array {
         if (isset(self::$data)) {
             return self::$data;
         }

@@ -95,7 +95,7 @@ class profile_field_phone extends profile_field_base {
      * @param  string|int $code     The code as parsed by get_data_from_string.
      * @return bool
      */
-    protected function should_try_international_parse($rawdata, $number, $code) {
+    protected function should_try_international_parse(string $rawdata, string|int $number, string|int $code): bool {
         $rawdata = trim((string)$rawdata);
 
         // No country info found at all.
@@ -124,18 +124,9 @@ class profile_field_phone extends profile_field_base {
      * @param  bool       $ismobile Whether to validate as mobile number.
      * @return array|null Parsed data with alpha2, country_code, number keys, or null on failure.
      */
-    protected static function parse_international_number($input, $ismobile = false) {
-        $normalized = trim((string)$input);
-
-        // Strip leading + or 00 international prefix.
-        if (strpos($normalized, '+') === 0) {
-            $normalized = substr($normalized, 1);
-        } else if (strpos($normalized, '00') === 0) {
-            $normalized = substr($normalized, 2);
-        }
-
+    protected static function parse_international_number(string $input, bool $ismobile = false): ?array {
         // Remove all non-digit characters (spaces, dashes, dots, parentheses).
-        $normalized = preg_replace('/[^0-9]/', '', $normalized);
+        $normalized = phone::normalize_number($input);
 
         if (empty($normalized) || strlen($normalized) < 4) {
             return null;
@@ -154,12 +145,12 @@ class profile_field_phone extends profile_field_base {
      * Build the internal storage format string from parsed components.
      *
      * @param  string $alpha2 The alpha2 country code.
-     * @param  mixed  $code   The numeric country phone code.
-     * @param  mixed  $number The phone number without country code.
+     * @param  string|int  $code   The numeric country phone code.
+     * @param  string|int  $number The phone number without country code.
      * @return string The internal format: (alpha2)-code-number
      */
-    protected static function build_internal_format($alpha2, $code, $number) {
-        return '(' . $alpha2 . ')-' . $code . '-' . $number;
+    protected static function build_internal_format(string $alpha2, string|int $code, string|int $number): string {
+        return "({$alpha2})-{$code}-{$number}";
     }
 
     /**
@@ -183,7 +174,7 @@ class profile_field_phone extends profile_field_base {
             $data['code']   = phone::get_phone_code_from_country($numbers[0]);
         } else if (count($numbers) == 1) {
             $data['number'] = $numbers[0];
-            $data['alpha2'] = $defcountry ?? self::get_default_country() ?? '';
+            $data['alpha2'] = $defcountry ?? phone::get_default_country() ?? '';
 
             if (!empty($data['alpha2'])) {
                 $data['code'] = phone::get_phone_code_from_country($data['alpha2']);
@@ -195,32 +186,6 @@ class profile_field_phone extends profile_field_base {
         }
 
         return $data;
-    }
-
-    /**
-     * Get the default country code.
-     * @param int $userid The user id to extract the default country from.
-     * @return ?string
-     */
-    protected static function get_default_country($userid = -1) {
-        global $CFG, $USER, $DB;
-
-        if (isloggedin() && ($userid == $USER->id) && !empty($USER->country)) {
-            return $USER->country;
-        }
-
-        if (!empty($userid) && $userid > 0) {
-            $usercounrty = $DB->get_field('user', 'country', ['id' => $userid]);
-            if (!empty($usercounrty)) {
-                return $usercounrty;
-            }
-        }
-
-        if (!empty($CFG->country)) {
-            return $CFG->country;
-        }
-
-        return null;
     }
 
     /**
@@ -237,7 +202,7 @@ class profile_field_phone extends profile_field_base {
             $this->inputname,
             format_string($this->field->name),
             $required,
-            self::get_default_country($this->userid)
+            phone::get_default_country($this->userid)
         );
     }
 
@@ -288,7 +253,7 @@ class profile_field_phone extends profile_field_base {
      */
     public function edit_field_set_default($mform) {
 
-        $defcountry = $this->alpha2 ?? self::get_default_country($this->userid);
+        $defcountry = $this->alpha2 ?? phone::get_default_country($this->userid);
         if (!empty($this->data)) {
             $data = [
                 'code'   => $defcountry,

@@ -16,6 +16,10 @@
 
 namespace profilefield_phone;
 
+use core\di;
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberUtil;
 use stdClass;
 
 /**
@@ -26,6 +30,34 @@ use stdClass;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class helper {
+    /**
+     * Return an instance of phone number util.
+     * @return PhoneNumberUtil|null
+     */
+    public static function get_helper(): ?PhoneNumberUtil {
+        try {
+            return di::get(PhoneNumberUtil::class);
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Parse
+     * @param string $number
+     * @param ?string $countrycode
+     * @return PhoneNumber|null
+     */
+    public static function parse(string $number, ?string $countrycode = null): ?PhoneNumber {
+        if ($h = self::get_helper()) {
+            try {
+                $phone = $h->parse($number, $countrycode, null, true);
+            } catch (NumberParseException $e) {
+                return null;
+            }
+        }
+        return $phone ?? null;
+    }
     /**
      * Get all user's valid phone numbers.
      * @param int|stdClass $user

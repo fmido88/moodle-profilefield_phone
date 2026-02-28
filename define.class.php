@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Menu profile field definition.
+ * Phone profile field definition.
  *
  * @package     profilefield_phone
  * @copyright   2024 Mohammad Farouk <phun.for.physics@gmail.com>
