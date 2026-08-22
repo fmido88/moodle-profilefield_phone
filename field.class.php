@@ -22,6 +22,7 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use profilefield_phone\helper;
 use profilefield_phone\phone;
 
 /**
@@ -61,15 +62,15 @@ class profile_field_phone extends profile_field_base {
         $this->dataformat = $dataformat;
 
         // Try the internal format parser first.
-        $numbers      = self::get_data_from_string($data);
+        $numbers      = helper::get_data_from_string($data ?? '');
         $this->number = $numbers['number'];
         $this->code   = $numbers['code'];
         $this->alpha2 = $numbers['alpha2'];
 
         // If the result looks wrong (e.g. number still contains the country code prefix,
         // or no country info was found), try parsing as an international number.
-        if ($this->should_try_international_parse($data, $this->number, $this->code)) {
-            $parsed = self::parse_international_number($data, false);
+        if (helper::should_try_international_parse($data, $this->number, $this->code)) {
+            $parsed = helper::parse_international_number($data, false);
             if ($parsed !== null) {
                 $this->number = $parsed['number'];
                 $this->code   = $parsed['country_code'];
@@ -78,114 +79,6 @@ class profile_field_phone extends profile_field_base {
         }
 
         $this->data = $this->display_data(false);
-    }
-
-    /**
-     * Determine if we should attempt international number parsing as a fallback.
-     *
-     * This is needed when get_data_from_string() doesn't properly parse the input,
-     * which happens when:
-     * - The input is an international format like +41791234501
-     * - get_data_from_string() stuffed the whole string into 'number' and filled
-     *   alpha2/code from the default country, leading to an invalid combination
-     * - No country info was extracted at all
-     *
-     * @param  string     $rawdata  The original raw input string.
-     * @param  string|int $number   The number as parsed by get_data_from_string.
-     * @param  string|int $code     The code as parsed by get_data_from_string.
-     * @return bool
-     */
-    protected function should_try_international_parse(string $rawdata, string|int $number, string|int $code): bool {
-        $rawdata = trim((string)$rawdata);
-
-        // No country info found at all.
-        if (!empty($number) && empty($code)) {
-            return true;
-        }
-
-        // Input looks like an international number (starts with + or 00).
-        if (strpos($rawdata, '+') === 0 || strpos($rawdata, '00') === 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Parse a string as an international phone number.
-     *
-     * Handles formats like:
-     * - +41791234501
-     * - 0041791234501
-     * - 41 79 123 45 01
-     * - +41 79 123 45 01
-     *
-     * @param  string     $input    The raw input string.
-     * @param  bool       $ismobile Whether to validate as mobile number.
-     * @return array|null Parsed data with alpha2, country_code, number keys, or null on failure.
-     */
-    protected static function parse_international_number(string $input, bool $ismobile = false): ?array {
-        // Remove all non-digit characters (spaces, dashes, dots, parentheses).
-        $normalized = phone::normalize_number($input);
-
-        if (empty($normalized) || strlen($normalized) < 4) {
-            return null;
-        }
-
-        $result = phone::validate_whole_number($normalized, $ismobile);
-
-        if ($result !== false && !empty($result['alpha2']) && !empty($result['country_code'])) {
-            return $result;
-        }
-
-        return null;
-    }
-
-    /**
-     * Build the internal storage format string from parsed components.
-     *
-     * @param  string $alpha2 The alpha2 country code.
-     * @param  string|int  $code   The numeric country phone code.
-     * @param  string|int  $number The phone number without country code.
-     * @return string The internal format: (alpha2)-code-number
-     */
-    protected static function build_internal_format(string $alpha2, string|int $code, string|int $number): string {
-        return "({$alpha2})-{$code}-{$number}";
-    }
-
-    /**
-     * Explode the stored data as codes and numbers.
-     * @param  string  $string
-     * @param  ?string $defcountry The default country code.
-     * @return array
-     */
-    public static function get_data_from_string($string, $defcountry = null) {
-        $numbers = explode('-', $string);
-
-        $data = [
-            'number' => '',
-            'alpha2' => '',
-            'code'   => '',
-        ];
-
-        if (count($numbers) == 2) {
-            $data['number'] = $numbers[1];
-            $data['alpha2'] = $numbers[0];
-            $data['code']   = phone::get_phone_code_from_country($numbers[0]);
-        } else if (count($numbers) == 1) {
-            $data['number'] = $numbers[0];
-            $data['alpha2'] = $defcountry ?? phone::get_default_country() ?? '';
-
-            if (!empty($data['alpha2'])) {
-                $data['code'] = phone::get_phone_code_from_country($data['alpha2']);
-            }
-        } else if (count($numbers) == 3) {
-            $data['number'] = $numbers[2];
-            $data['code']   = $numbers[1];
-            $data['alpha2'] = str_replace(['(', ')'], '', $numbers[0]);
-        }
-
-        return $data;
     }
 
     /**
@@ -236,7 +129,7 @@ class profile_field_phone extends profile_field_base {
         }
 
         if (empty($this->number) || (strpos($this->data, '+') === 0)) {
-            return $this->data;
+            return $this->data ?? '';
         }
 
         if (!empty($this->code)) {
@@ -261,7 +154,7 @@ class profile_field_phone extends profile_field_base {
             ];
         } else if (isset($this->field->defaultdata)) {
             $key     = $this->field->defaultdata;
-            $default = self::get_data_from_string($key, $defcountry);
+            $default = helper::get_data_from_string($key, $defcountry);
 
             if (!empty($default['number'])) {
                 $data = [
@@ -311,7 +204,7 @@ class profile_field_phone extends profile_field_base {
         $this->code   = $areacode;
         $this->alpha2 = $data['code'];
 
-        return self::build_internal_format($data['code'], $areacode, $data['number']);
+        return helper::build_internal_format($data['code'], $areacode, $data['number']);
     }
 
     /**
@@ -337,22 +230,22 @@ class profile_field_phone extends profile_field_base {
 
         // 1. Try parsing as international number first (most common CSV format).
         //    This handles +41..., 0041..., 41..., etc.
-        $international = self::parse_international_number($data, $ismobile);
+        $international = helper::parse_international_number($data, $ismobile);
         if ($international !== null) {
             $this->number = $international['number'];
             $this->code   = $international['country_code'];
             $this->alpha2 = $international['alpha2'];
-            return self::build_internal_format($international['alpha2'], $international['country_code'], $international['number']);
+            return helper::build_internal_format($international['alpha2'], $international['country_code'], $international['number']);
         }
 
         // 2. Try the internal format parser for (alpha2)-code-number and alpha2-number.
-        $parsed = self::get_data_from_string($data);
+        $parsed = helper::get_data_from_string($data);
         if (!empty($parsed['number']) && !empty($parsed['alpha2']) && !empty($parsed['code'])) {
             if (phone::validate_number($parsed['alpha2'], $parsed['number'], $ismobile, false, true)) {
                 $this->number = $parsed['number'];
                 $this->code   = $parsed['code'];
                 $this->alpha2 = $parsed['alpha2'];
-                return self::build_internal_format($parsed['alpha2'], $parsed['code'], $parsed['number']);
+                return helper::build_internal_format($parsed['alpha2'], $parsed['code'], $parsed['number']);
             }
         }
 
@@ -445,21 +338,21 @@ class profile_field_phone extends profile_field_base {
                 $rawstring = trim($usernew->{$this->inputname});
 
                 // 1. Try international format (+41..., 0041..., 41..., etc.).
-                $international = self::parse_international_number($rawstring, $ismobile);
+                $international = helper::parse_international_number($rawstring, $ismobile);
                 if ($international !== null) {
                     $alpha2 = $international['alpha2'];
                     $code   = $international['country_code'];
                     $number = $international['number'];
-                    $value  = self::build_internal_format($alpha2, $code, $number);
+                    $value  = helper::build_internal_format($alpha2, $code, $number);
                 } else {
                     // 2. Try internal format via get_data_from_string.
-                    $data   = self::get_data_from_string($rawstring);
+                    $data   = helper::get_data_from_string($rawstring);
                     $alpha2 = $data['alpha2'];
                     $number = $data['number'];
                     $code   = $data['code'];
 
                     if (!empty($alpha2) && !empty($code) && !empty($number)) {
-                        $value = self::build_internal_format($alpha2, $code, $number);
+                        $value = helper::build_internal_format($alpha2, $code, $number);
                     }
                 }
             } else {
@@ -470,7 +363,7 @@ class profile_field_phone extends profile_field_base {
                     $code   = phone::get_phone_code_from_country($alpha2) ?? '';
 
                     if (!empty($code)) {
-                        $value = self::build_internal_format($alpha2, $code, $number);
+                        $value = helper::build_internal_format($alpha2, $code, $number);
                     } else {
                         $value = $number;
                     }

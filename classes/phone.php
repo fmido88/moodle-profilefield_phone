@@ -19,6 +19,8 @@ namespace profilefield_phone;
 use core_text;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
+use MoodleQuickForm;
+use stdClass;
 
 /**
  * Helper class to validate phone number data and handle rendering its field
@@ -29,12 +31,6 @@ use libphonenumber\PhoneNumberType;
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class phone {
-    /**
-     * Phones country data.
-     * @var array[array]
-     */
-    protected static $data;
-
     /**
      * Reason of invalid is not matching phone number length.
      * @var string
@@ -66,13 +62,13 @@ class phone {
      */
     public static function add_phone_to_form(
         \MoodleQuickForm &$mform,
-        $element,
-        $visiblename,
-        $required = false,
-        $defaultcountry = null,
-        $fullstring = true,
-        $forcecountry = false,
-    ) {
+        string $element,
+        string $visiblename,
+        bool $required = false,
+        string|int|null $defaultcountry = null,
+        bool $fullstring = true,
+        bool $forcecountry = false,
+    ): void {
         global $PAGE;
 
         $options = [
@@ -110,30 +106,31 @@ class phone {
                     [$strrequired, 'required', null, 'client'],
                 ],
             ];
+
             if (!$forcecountry) {
-                 $rules['code'] = [
-                    [$strrequired, 'required', null, 'client'],
-                 ];
+                $rules['code'] = [
+                   [$strrequired, 'required', null, 'client'],
+                ];
             }
             $mform->addGroupRule($element, $rules);
         }
 
         if ($defaultcountry) {
-            if (strlen($defaultcountry) === 3) {
+            if (\strlen($defaultcountry) === 3) {
                 $defaultcountry = self::swap_alpha($defaultcountry);
             } else if (0 !== ($code = self::normalize_number($defaultcountry))) {
                 $defaultcountry = self::get_country_alpha_from_code($code);
             }
 
-            if (strlen($defaultcountry) === 2) {
+            if (\strlen($defaultcountry) === 2) {
                 if ($forcecountry) {
                     $mform->setDefault($element, ['code' => $defaultcountry]);
                     $autocomplete->freeze();
                     $autocomplete->setPersistantFreeze(false);
-                    $mform->addElement('hidden', $element . '[code]', $defaultcountry);
-                    $mform->setType($element . '[code]', PARAM_ALPHA);
+                    $mform->addElement('hidden', "{$element}[code]", $defaultcountry);
+                    $mform->setType("{$element}[code]", PARAM_ALPHA);
                 } else {
-                    $mform->setDefault($element . '[code]', $defaultcountry);
+                    $mform->setDefault("{$element}[code]", $defaultcountry);
                 }
             }
         }
@@ -151,7 +148,7 @@ class phone {
      * @param  string           $element
      * @return void
      */
-    public static function set_default_phone_form(&$mform, $element) {
+    public static function set_default_phone_form(MoodleQuickForm &$mform, string $element): void {
         if (empty($_REQUEST[$element]) || !$mform->elementExists($element)) {
             return;
         }
@@ -162,11 +159,11 @@ class phone {
             $phone = optional_param($element, null, PARAM_TEXT);
 
             if (!empty($phone)) {
-                $data  = self::validate_whole_number($phone, true);
+                $data = self::validate_whole_number($phone, true);
                 $final = [];
 
                 if (false !== $data) {
-                    $final['code']   = $data['country_code'];
+                    $final['code'] = $data['country_code'];
                     $final['number'] = $data['number'];
                 } else {
                     $final['number'] = $phone;
@@ -189,17 +186,23 @@ class phone {
      * @param  array           $reasons       array of reasons of invalidation.
      * @return string[]
      */
-    public static function validate_phone_from_submitted_data($data, $invalidstring = '', &$reasons = []) {
+    public static function validate_phone_from_submitted_data(
+        array|stdClass $data,
+        string $invalidstring = '',
+        array &$reasons = []
+    ): array {
         if (empty($invalidstring)) {
             $invalidstring = get_string('invaliddata', 'profilefield_phone');
         }
 
-        $data   = (array)$data;
+        $data = (array)$data;
         $errors = [];
 
         foreach ($data as $key => $value) {
-            if (is_array($value) && isset($value['code'], $value['number'])) {
-                if (!self::validate_number($value['code'], $value['number'], true, false, true, $reasons[$key])) {
+            if (\is_array($value) && isset($value['code'], $value['number'])) {
+                $kreasons = [];
+                if (!self::validate_number($value['code'], $value['number'], true, false, true, $kreasons)) {
+                    $reasons[$key] = $kreasons;
                     $errors[$key] = $invalidstring;
                 }
             }
@@ -213,17 +216,17 @@ class phone {
      * @param  \stdClass|array $data
      * @return void
      */
-    public static function normalize_submitted_phone_data(&$data) {
+    public static function normalize_submitted_phone_data(stdClass|array &$data): void {
         foreach ($data as $key => $value) {
-            if (is_object($value)) {
+            if (\is_object($value)) {
                 $value = (array)$value;
             }
 
-            if (is_array($value) && isset($value['code'], $value['number'])) {
-                $code   = self::get_phone_code_from_country($value['code']);
+            if (\is_array($value) && isset($value['code'], $value['number'])) {
+                $code = self::get_phone_code_from_country($value['code']);
                 $number = self::normalize_number($value['number']);
 
-                if (is_object($data)) {
+                if (\is_object($data)) {
                     $data->$key = (int)($code . $number);
                 } else {
                     $data[$key] = (int)($code . $number);
@@ -237,7 +240,7 @@ class phone {
      * @param  bool     $fullstring
      * @return string[]
      */
-    public static function get_country_codes_options($fullstring = false) {
+    public static function get_country_codes_options(bool $fullstring = false): array {
         $options = [];
 
         $strman = get_string_manager();
@@ -267,9 +270,9 @@ class phone {
      * @param  string   $country
      * @return int|null
      */
-    public static function get_phone_code_from_country($country) {
+    public static function get_phone_code_from_country(string $country): ?int {
         $country = strtoupper($country);
-        $key     = (strlen($country) === 2) ? 'alpha2' : 'alpha3';
+        $key = (strlen($country) === 2) ? 'alpha2' : 'alpha3';
 
         if ($key === 'alpha2' && isset(self::data()[$country])) {
             return (int)(self::data()[$country]['country_code']);
@@ -291,7 +294,7 @@ class phone {
      * @param  string      $return
      * @return string|null
      */
-    public static function get_country_alpha_from_code($code, $return = 'alpha2') {
+    public static function get_country_alpha_from_code(int|string $code, string $return = 'alpha2'): ?string {
         $code = self::normalize_number($code);
 
         foreach (self::data() as $data) {
@@ -308,18 +311,18 @@ class phone {
      * @param  string $country
      * @return string
      */
-    public static function swap_alpha($country) {
+    public static function swap_alpha(string $country): string {
         $country = strtoupper($country);
 
-        if (strlen($country) === 2) {
+        if (\strlen($country) === 2) {
             if (isset(self::data()[$country])) {
                 return self::data()[$country]['alpha3'];
             }
 
-            $key    = 'alpha2';
+            $key = 'alpha2';
             $return = 'alpha3';
         } else {
-            $key    = 'alpha3';
+            $key = 'alpha3';
             $return = 'alpha2';
         }
 
@@ -343,20 +346,19 @@ class phone {
      * @return array|bool
      */
     public static function validate_number(
-        $code,
-        $number,
-        $ismobile = true,
-        $returndata = false,
-        $usecountry = false,
-        &$reasons = []
-    ) {
-
+        string $code,
+        string $number,
+        bool $ismobile = true,
+        bool $returndata = false,
+        bool $usecountry = false,
+        array &$reasons = []
+    ): array|bool {
         $number = self::normalize_number($number);
 
         $code = trim($code ?? '');
 
         if (!$usecountry || is_number($code) || strpos($code, '+') === 0) {
-            $code    = self::normalize_number($code);
+            $code = self::normalize_number($code);
             $codekey = 'country_code';
         } else if (\strlen($code) === 2) {
             $codekey = 'alpha2';
@@ -384,6 +386,7 @@ class phone {
 
         if ($codekey === 'alpha2') {
             $validation = self::validate_number_by_util($number, $code, $ismobile);
+
             if ($validation !== null) {
                 return !empty($validation) ? ($returndata ? $validation : true) : false;
             }
@@ -436,12 +439,12 @@ class phone {
      * @return bool
      */
     protected static function compare_with_single_country_data(
-        $code,
-        $codetype,
-        $number,
-        $counrtydata,
-        $ismobile = true,
-        &$reasons = []
+        string|int $code,
+        string $codetype,
+        int|string $number,
+        array $counrtydata,
+        bool $ismobile = true,
+        array &$reasons = []
     ): bool {
         $valid = false;
 
@@ -449,7 +452,7 @@ class phone {
             $valid = true;
 
             if (!\in_array(\strlen($number), $counrtydata['phone_number_lengths'], true)) {
-                $valid     = false;
+                $valid = false;
                 $reasons[] = self::REASON_NUMBER_LENGTH;
             }
 
@@ -476,19 +479,24 @@ class phone {
      * @param  string $phone
      * @return int
      */
-    public static function normalize_number(string $phone) {
+    public static function normalize_number(string $phone): int {
         return (int)preg_replace('/[^0-9]/', '', $phone);
     }
 
     /**
      * Validate the phone number by phone number utils class if existed.
-     * @param string $number
-     * @param ?string $defaultcountry
-     * @param bool $ismobile
+     * @param  string           $number
+     * @param  ?string          $defaultcountry
+     * @param  bool             $ismobile
      * @return false|array|null array of phone data if valid, false for not valid or null for error or non-existance of the class.
      */
-    public static function validate_number_by_util(string $number, ?string $defaultcountry, bool $ismobile = true): array|false|null {
+    public static function validate_number_by_util(
+        string $number,
+        ?string $defaultcountry,
+        bool $ismobile = true
+    ): array|false|null {
         $h = helper::get_helper();
+
         if (empty($defaultcountry) && strpos($number, '+') !== 0 && strpos($number, '00') !== 0) {
             $defaultcountry = self::get_default_country();
         }
@@ -503,6 +511,7 @@ class phone {
         if ($phone) {
             $type = $ismobile ? PhoneNumberType::MOBILE : PhoneNumberType::FIXED_LINE_OR_MOBILE;
             $valid = $h->isPossibleNumberForType($phone, $type);
+
             if (!$valid) {
                 return false;
             }
@@ -512,6 +521,7 @@ class phone {
                 'alpha2'       => $h->getRegionCodeForNumber($phone),
                 'formatted'    => $h->format($phone, PhoneNumberFormat::INTERNATIONAL),
             ];
+
             return $data;
         }
 
@@ -524,13 +534,15 @@ class phone {
      * @param  bool        $ismobile
      * @return array|false
      */
-    public static function validate_whole_number(string $phone, bool $ismobile = true) {
+    public static function validate_whole_number(string $phone, bool $ismobile = true): array|false {
         $validation = self::validate_number_by_util($phone, null, $ismobile);
+
         if (null !== $validation) {
             return $validation;
         }
 
         $phone = self::normalize_number($phone);
+
         if (empty($phone) || \strlen($phone) < 4) {
             return false;
         }
@@ -550,9 +562,10 @@ class phone {
 
         return false;
     }
+
     /**
      * Get the default country code.
-     * @param int $userid The user id to extract the default country from.
+     * @param  int     $userid The user id to extract the default country from.
      * @return ?string
      */
     public static function get_default_country(int $userid = -1): ?string {
@@ -564,6 +577,7 @@ class phone {
 
         if (!empty($userid) && $userid > 0) {
             $usercounrty = $DB->get_field('user', 'country', ['id' => $userid]);
+
             if (!empty($usercounrty)) {
                 return $usercounrty;
             }
@@ -575,18 +589,19 @@ class phone {
 
         return null;
     }
+
     /**
      * Return an array with country data rules from the
      * country code.
      * @param  string|int $code
      * @return array|null
      */
-    public static function get_country_rules($code) {
+    public static function get_country_rules(string|int $code): ?array {
         $counrtycode = self::normalize_number($code);
 
         if (!empty($counrtycode)) {
             $code = $counrtycode;
-            $key  = 'country_code';
+            $key = 'country_code';
         } else if (core_text::strlen($code) === 2) {
             $key = 'alpha2';
         } else if (core_text::strlen($code) === 3) {
@@ -595,7 +610,7 @@ class phone {
             return null;
         }
 
-        $code = strtoupper((string)$code);
+        $code = core_text::strtoupper((string)$code);
 
         if ($key === 'alpha2' && isset(self::data()[$code])) {
             return self::data()[$code];
@@ -612,14 +627,16 @@ class phone {
 
     /**
      * Array with all possible data.
-     * @return array[]
+     * @return array<array{
+     * alpha2: string,
+     * alpha3: string,
+     * country_code: int,
+     * country_name: string,
+     * mobile_begin_with: int[],
+     * phone_number_lengths: int[]
+     * }>
      */
     protected static function data(): array {
-        if (isset(self::$data)) {
-            return self::$data;
-        }
-        self::$data = data::PHONE_DATA;
-
-        return self::$data;
+        return data::PHONE_DATA;
     }
 }
