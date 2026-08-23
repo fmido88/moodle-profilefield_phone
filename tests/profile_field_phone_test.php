@@ -17,6 +17,7 @@
 namespace profilefield_phone;
 
 use advanced_testcase;
+use MoodleQuickForm;
 use profile_field_phone;
 use stdClass;
 
@@ -36,6 +37,7 @@ final class profile_field_phone_test extends advanced_testcase {
         global $CFG;
         require_once("{$CFG->dirroot}/user/profile/lib.php");
         require_once("{$CFG->dirroot}/user/profile/field/phone/field.class.php");
+        require_once("{$CFG->libdir}/formslib.php");
         parent::setUpBeforeClass();
     }
 
@@ -286,5 +288,120 @@ final class profile_field_phone_test extends advanced_testcase {
         $errors2 = $field2->edit_validate_field($usernew2);
         $this->assertArrayHasKey($field2->inputname, $errors2);
         $this->assertStringContainsString(get_string('valuealreadyused'), $errors2[$field2->inputname]);
+    }
+
+    /**
+     * A locked field must supply the alpha-2 country identifier - the representation expected by the
+     * autocomplete options and by edit_validate_field() - not the numeric calling code, to the frozen
+     * form constant.
+     *
+     * This exercises the real MoodleQuickForm lifecycle: edit_field_add() builds the actual autocomplete
+     * element (keyed by alpha-2, e.g. "IN"), edit_field_set_locked() hard-freezes it and sets the form
+     * constant, and MoodleQuickForm::exportValues() (the same merge Moodle uses for both frozen rendering
+     * and submitted-data resolution) is inspected to prove the constant now carries the alpha-2 value.
+     */
+    public function test_locked_field_uses_alpha2_country_representation(): void {
+        $this->resetAfterTest();
+        $field = $this->create_field(['locked' => 1]);
+        $field->set_user_data('(IN)-91-9123236806');
+
+        // The alpha-2 identifier and the numeric calling code are distinct representations.
+        $this->assertSame('IN', $field->alpha2);
+        $this->assertSame('91', (string)$field->code);
+        $this->assertNotSame($field->alpha2, (string)$field->code);
+
+        $mform = new MoodleQuickForm('phonelockedtestform', 'post', '');
+        $field->edit_field_add($mform);
+        $field->edit_field_set_locked($mform);
+
+        $exported = $mform->exportValues();
+        $this->assertSame('IN', $exported[$field->inputname]['code']);
+        $this->assertSame('9123236806', (string)$exported[$field->inputname]['number']);
+    }
+
+    /**
+     * A valid locked stored phone must not fail validation because of the country representation.
+     */
+    public function test_locked_valid_phone_does_not_fail_validation(): void {
+        $this->resetAfterTest();
+        $field = $this->create_field(['locked' => 1]);
+        $field->set_user_data('(IN)-91-9123236806');
+
+        // Mirror what edit_load_user_data()/the locked constant now supply: the alpha-2 code.
+        $usernew = (object)[
+            'id' => 123,
+            $field->inputname => [
+                'number' => $field->number,
+                'code'   => $field->alpha2,
+            ],
+        ];
+
+        $this->assertSame([], $field->edit_validate_field($usernew));
+    }
+
+    /**
+     * Saving an unrelated profile field must leave a stored locked phone value unchanged and must not
+     * introduce a phone validation error.
+     */
+    public function test_unrelated_profile_save_preserves_locked_phone(): void {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        $fielddef = $this->getDataGenerator()->create_custom_profile_field([
+            'datatype' => 'phone',
+            'name' => 'Phone',
+            'shortname' => 'phone',
+            'required' => 0,
+            'forceunique' => 0,
+            'param3' => 0,
+            'locked' => 1,
+        ]);
+
+        $user = $this->getDataGenerator()->create_user(['timezone' => 'Australia/Sydney']);
+
+        $inputname = 'profile_field_' . $fielddef->shortname;
+        $user->$inputname = ['code' => 'IN', 'number' => '9123236806'];
+        profile_save_data($user);
+
+        // Simulate saving an unrelated profile value (a core user field), the same way the profile
+        // edit form does, without resubmitting the locked phone field's own data.
+        $user->timezone = 'Europe/London';
+        unset($user->$inputname);
+        user_update_user($user, false, false);
+        profile_save_data($user);
+
+        $this->assertSame('Europe/London', $DB->get_field('user', 'timezone', ['id' => $user->id]));
+        $this->assertSame(
+            '(IN)-91-9123236806',
+            $DB->get_field('user_info_data', 'data', ['fieldid' => $fielddef->id, 'userid' => $user->id])
+        );
+
+        $field = new profile_field_phone($fielddef->id, $user->id);
+        $usernew = (object)[
+            'id' => $user->id,
+            $field->inputname => [
+                'number' => $field->number,
+                'code'   => $field->alpha2,
+            ],
+        ];
+        $this->assertSame([], $field->edit_validate_field($usernew));
+    }
+
+    /**
+     * Unlocked/editable alpha-2 + number submission remains valid, unaffected by the locked-field fix.
+     */
+    public function test_unlocked_field_behaviour_unchanged(): void {
+        $this->resetAfterTest();
+        $field = $this->create_field();
+
+        $data = ['code' => 'IN', 'number' => '9123236806'];
+        $this->assertSame('(IN)-91-9123236806', $field->edit_save_data_preprocess($data, new stdClass()));
+
+        $usernew = (object)[
+            'id' => 123,
+            $field->inputname => $data,
+        ];
+        $this->assertSame([], $field->edit_validate_field($usernew));
     }
 }

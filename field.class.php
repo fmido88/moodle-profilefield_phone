@@ -303,7 +303,7 @@ class profile_field_phone extends profile_field_base {
             $mform->hardFreeze($this->inputname);
             $data = [
                 'number' => $this->number,
-                'code'   => $this->code,
+                'code'   => $this->alpha2,
             ];
             $mform->setConstant($this->inputname, $data);
         }
