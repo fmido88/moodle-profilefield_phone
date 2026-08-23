@@ -19,6 +19,7 @@ namespace profilefield_phone;
 use core_text;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberType;
+use libphonenumber\PhoneNumberUtil;
 use MoodleQuickForm;
 use stdClass;
 
@@ -290,6 +291,14 @@ class phone {
     /**
      * Get the country alphabetic code from phone number code.
      *
+     * Multiple alpha2 regions can share the same country calling code (e.g. +44 covers GB, GG, IM
+     * and JE). Rather than picking an arbitrary match based on this plugin's data-table order, the
+     * canonical region for the calling code is resolved via the installed libphonenumber library
+     * (the same "main region" metadata libphonenumber itself uses), and only returned if that
+     * canonical region is present in this plugin's supported country data. A calling code whose
+     * canonical region is not supported by the plugin - or that libphonenumber does not recognise
+     * at all - resolves to null rather than an arbitrary or incorrect region.
+     *
      * @param  int|string  $code
      * @param  string      $return
      * @return string|null
@@ -297,13 +306,21 @@ class phone {
     public static function get_country_alpha_from_code(int|string $code, string $return = 'alpha2'): ?string {
         $code = self::normalize_number($code);
 
-        foreach (self::data() as $data) {
-            if ($data['country_code'] === $code) {
-                return $data[$return];
-            }
+        if ($code <= 0) {
+            return null;
         }
 
-        return null;
+        $h = helper::get_helper();
+        if ($h === null) {
+            return null;
+        }
+
+        $canonical = $h->getRegionCodeForCountryCode($code);
+        if ($canonical === PhoneNumberUtil::UNKNOWN_REGION || $canonical === PhoneNumberUtil::REGION_CODE_FOR_NON_GEO_ENTITY) {
+            return null;
+        }
+
+        return self::data()[$canonical][$return] ?? null;
     }
 
     /**

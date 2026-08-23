@@ -404,4 +404,87 @@ final class profile_field_phone_test extends advanced_testcase {
         ];
         $this->assertSame([], $field->edit_validate_field($usernew));
     }
+
+    /**
+     * A normal, unambiguous supported calling code resolves to its alpha-2 region. This also proves
+     * the previous strict int/string type-mismatch (normalize_number() returns int, but
+     * classes/data.php stores country_code as string) no longer makes every lookup return null.
+     */
+    public function test_reverse_lookup_resolves_supported_calling_code(): void {
+        $this->assertSame('IR', phone::get_country_alpha_from_code('98'));
+        $this->assertSame('IR', phone::get_country_alpha_from_code('+98'));
+        $this->assertSame('IR', phone::get_country_alpha_from_code(98));
+    }
+
+    /**
+     * $return = 'alpha3' resolves via the same canonical-region record.
+     */
+    public function test_reverse_lookup_alpha3_return(): void {
+        $this->assertSame('IRN', phone::get_country_alpha_from_code('98', 'alpha3'));
+    }
+
+    /**
+     * Shared calling codes must resolve to libphonenumber's own canonical "main region" for that
+     * code, not to whichever region happens to appear first in classes/data.php's declared order.
+     *
+     * +358 and +262 are the critical cases: this plugin's data-table order would otherwise resolve
+     * +358 to AX (Aland Islands) instead of FI (Finland), and +262 to YT (Mayotte) instead of RE
+     * (Reunion) - both confirmed by simulating a naive first-match lookup against the real declared
+     * table order during this issue's investigation. +44 and +61 are included as additional
+     * straightforward shared-code coverage (GB/GG/IM/JE and AU/CC/CX respectively).
+     */
+    public function test_reverse_lookup_shared_code_uses_canonical_region(): void {
+        $this->assertSame('FI', phone::get_country_alpha_from_code('358'));
+        $this->assertSame('RE', phone::get_country_alpha_from_code('262'));
+        $this->assertSame('GB', phone::get_country_alpha_from_code('44'));
+        $this->assertSame('AU', phone::get_country_alpha_from_code('61'));
+    }
+
+    /**
+     * A calling code whose libphonenumber-canonical region is not part of this plugin's supported
+     * country data must resolve to null, not to some other region and not to the unsupported region
+     * itself. +247's canonical region is AC (Ascension Island), which Issue #6 deliberately keeps
+     * unsupported - this proves Issue #8 does not silently implement Issue #6.
+     */
+    public function test_reverse_lookup_canonical_region_outside_plugin_data_is_null(): void {
+        $this->assertNull(phone::get_country_alpha_from_code('247'));
+        $this->assertArrayNotHasKey('AC', data::PHONE_DATA);
+    }
+
+    /**
+     * Invalid, unrecognised, zero, or empty calling codes resolve to null rather than throwing or
+     * matching an unrelated region.
+     */
+    public function test_reverse_lookup_invalid_calling_code_is_null(): void {
+        $this->assertNull(phone::get_country_alpha_from_code('9999'));
+        $this->assertNull(phone::get_country_alpha_from_code('0'));
+        $this->assertNull(phone::get_country_alpha_from_code(''));
+    }
+
+    /**
+     * add_phone_to_form() resolves a numeric default-country hint to the canonical alpha-2 region via
+     * the real MoodleQuickForm lifecycle, the same mechanism exercised for the locked-field fix in
+     * Issue #5's tests.
+     */
+    public function test_add_phone_to_form_numeric_default_country(): void {
+        $this->resetAfterTest();
+
+        $mform = new MoodleQuickForm('phonenumericdefaulttestform', 'post', '');
+        phone::add_phone_to_form($mform, 'testphone', 'Test phone', false, '98');
+
+        $exported = $mform->exportValues();
+        $this->assertSame('IR', $exported['testphone']['code']);
+    }
+
+    /**
+     * helper::get_data_from_string() resolves a numeric $defcountry hint to the canonical alpha-2
+     * region and the matching numeric calling code.
+     */
+    public function test_get_data_from_string_numeric_default_country(): void {
+        $result = helper::get_data_from_string('9123236806', '98');
+
+        $this->assertSame('IR', $result['alpha2']);
+        $this->assertSame(98, $result['code']);
+        $this->assertSame('9123236806', $result['number']);
+    }
 }
