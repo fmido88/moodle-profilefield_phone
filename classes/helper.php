@@ -99,7 +99,7 @@ class helper {
      * @param string $code
      * @param int $strictness
      *
-     * @return stdClass[]|null
+     * @return stdClass|stdClass[]|null
      */
     public static function get_user_by_phone(string $phone, string $code = '', int $strictness = IGNORE_MISSING) {
         global $DB;
@@ -116,19 +116,20 @@ class helper {
         $phone1where = $DB->sql_like($DB->sql_compare_text('u.phone1'), ':phone2', false, false);
         $phone2where = $DB->sql_like($DB->sql_compare_text('u.phone2'), ':phone3', false, false);
 
-        $uid = $DB->sql_concat('u.id', "'-'", 'u.phone1', "'-'", 'u.phone2', "'-'", 'ui.id');
+        $uid = $DB->sql_concat('u.id', "'-'", 'u.phone1', "'-'", 'u.phone2');
         $sql = "SELECT $uid as unid, u.*, ui.data as phone3
                 FROM {user} u
         LEFT JOIN {user_info_data} ui ON ui.userid = u.id
         LEFT JOIN {user_info_field} uf ON ui.fieldid = uf.id
-            WHERE uf.datatype = :phonetype
-                AND ($phone1where
+            WHERE $phone1where
                 OR $phone2where
                 OR (
+                    uf.datatype = :phonetype
+                    AND
                         $datawhere
                     -- AND uf.forceunique = 1
-                    )
                 )";
+
         $records = $DB->get_records_sql($sql, $params);
 
         $users = [];
