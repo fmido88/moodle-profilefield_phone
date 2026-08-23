@@ -190,21 +190,27 @@ class profile_field_phone extends profile_field_base {
             return $this->preprocess_string_data($data);
         }
 
-        if (empty($data['number'])) {
+        $number = $data['number'] ?? '';
+        $alpha2 = $data['code'] ?? '';
+
+        if (empty($number)) {
             return '';
         }
 
-        if (!phone::validate_number($data['code'], $data['number'], !empty($this->field->param3), false, true)) {
+        if (!phone::validate_number($alpha2, $number, !empty($this->field->param3), false, true)) {
             return '';
         }
 
-        $areacode = phone::get_phone_code_from_country($data['code']);
+        $areacode = phone::get_phone_code_from_country($alpha2);
+        if ($areacode === null) {
+            return '';
+        }
 
-        $this->number = $data['number'];
+        $this->number = $number;
         $this->code   = $areacode;
-        $this->alpha2 = $data['code'];
+        $this->alpha2 = $alpha2;
 
-        return helper::build_internal_format($data['code'], $areacode, $data['number']);
+        return helper::build_internal_format($alpha2, $areacode, $number);
     }
 
     /**
@@ -324,6 +330,7 @@ class profile_field_phone extends profile_field_base {
         $errors = [];
 
         $alpha2 = '';
+        $code   = '';
         $number = '';
         $value  = '';
 
@@ -359,13 +366,11 @@ class profile_field_phone extends profile_field_base {
                 $number = $usernew->{$this->inputname}['number'] ?? null;
 
                 if (!empty($number)) {
-                    $alpha2 = $usernew->{$this->inputname}['code'];
+                    $alpha2 = $usernew->{$this->inputname}['code'] ?? '';
                     $code   = phone::get_phone_code_from_country($alpha2) ?? '';
 
                     if (!empty($code)) {
                         $value = helper::build_internal_format($alpha2, $code, $number);
-                    } else {
-                        $value = $number;
                     }
                 }
             }
@@ -376,9 +381,11 @@ class profile_field_phone extends profile_field_base {
         }
 
         if ($this->is_required() || !empty($number)) {
-            $valid = phone::validate_number($alpha2, $number, $ismobile, false, true);
+            $countrycode = !empty($alpha2) ? phone::get_phone_code_from_country($alpha2) : null;
+            $valid = $countrycode !== null && phone::validate_number($alpha2, $number, $ismobile, false, true);
 
             if (!$valid) {
+                $value = '';
                 $errors[$this->inputname] = get_string('profileinvaliddata', 'admin');
             }
         }
