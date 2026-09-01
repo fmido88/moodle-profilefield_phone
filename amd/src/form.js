@@ -23,9 +23,10 @@
 
 import $ from 'jquery';
 
+const RETRY_DELAY = 500;
+const MAX_ATTEMPTS = 20;
+
 class PhoneForm {
-    /** @type {Array<NodeJS.Timeout>} */
-    searchTimeout;
     /** @type {JQuery<HTMLElement>} */
     groupContainer;
     /** @type {JQuery<HTMLElement>} */
@@ -93,7 +94,8 @@ class PhoneForm {
      */
     getPhoneCode(country) {
         let text = this.hiddenSelect.find('option[value="' + country + '"]').text();
-        return text.match(/\+\d+/g).shift();
+        let matches = text.match(/\+\d+/g);
+        return matches ? matches[0] : '';
     }
 
     /**
@@ -102,7 +104,6 @@ class PhoneForm {
      * to get rendered by js and the search input to be in the DOM.
      */
     identifySearchInput() {
-        clearTimeout(this.searchTimeout);
         this.searchInput = this.groupContainer.find('input[type="text"][data-fieldtype="autocomplete"]');
         if (this.searchInput.length > 0) {
             this.register();
@@ -110,7 +111,10 @@ class PhoneForm {
         } else {
             let freezed = this.groupContainer.find('span[data-fieldtype="autocomplete"]');
             if (freezed.length > 0 && freezed.find('select').length === 0) {
-                freezed.text(freezed.text().match(/\+\d+/g).shift());
+                let matches = freezed.text().match(/\+\d+/g);
+                if (matches) {
+                    freezed.text(matches[0]);
+                }
                 return true;
             }
         }
@@ -120,14 +124,16 @@ class PhoneForm {
 
 /**
  * @param {Function} fun
+ * @param {Number} attempts Number of attempts remaining.
+ * @param {Number} delay Delay in milliseconds before this attempt.
  */
-function timeoutFunction(fun) {
+function timeoutFunction(fun, attempts = MAX_ATTEMPTS, delay = 0) {
     setTimeout(function() {
         let done = fun();
-        if (!done) {
-            timeoutFunction(fun, 500);
+        if (!done && attempts > 1) {
+            timeoutFunction(fun, attempts - 1, RETRY_DELAY);
         }
-    });
+    }, delay);
 }
 
 export const init = function(name, formid) {
