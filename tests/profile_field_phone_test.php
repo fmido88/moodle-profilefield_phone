@@ -164,6 +164,17 @@ final class profile_field_phone_test extends advanced_testcase {
     }
 
     /**
+     * Helper to update user object in a way compatible with Moodle < 5.3 and 5.3+.
+     */
+    private function update_user_record(stdClass $user): void {
+        if (class_exists('\core\user') && method_exists('\core\user', 'update_user')) {
+            \core\user::update_user($user, false, false);
+        } else {
+            user_update_user($user, false, false);
+        }
+    }
+
+    /**
      * A malformed phone field must not throw from profile_save_data after an unrelated core update.
      */
     public function test_profile_save_with_malformed_phone_does_not_throw_after_core_update(): void {
@@ -174,7 +185,7 @@ final class profile_field_phone_test extends advanced_testcase {
         $user = $this->getDataGenerator()->create_user(['timezone' => 'Australia/Sydney']);
 
         $user->timezone = 'Europe/London';
-        user_update_user($user, false, false);
+        $this->update_user_record($user);
 
         $user->{$field->inputname} = [
             'code' => 'GG',
@@ -368,7 +379,7 @@ final class profile_field_phone_test extends advanced_testcase {
         // edit form does, without resubmitting the locked phone field's own data.
         $user->timezone = 'Europe/London';
         unset($user->$inputname);
-        user_update_user($user, false, false);
+        $this->update_user_record($user);
         profile_save_data($user);
 
         $this->assertSame('Europe/London', $DB->get_field('user', 'timezone', ['id' => $user->id]));

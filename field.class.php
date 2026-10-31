@@ -128,7 +128,7 @@ class profile_field_phone extends profile_field_base {
             $this->set_user_data($this->data);
         }
 
-        if (empty($this->number) || (strpos($this->data, '+') === 0)) {
+        if (empty($this->number) || (!empty($this->data) && strpos((string)$this->data, '+') === 0)) {
             return $this->data ?? '';
         }
 
@@ -269,7 +269,11 @@ class profile_field_phone extends profile_field_base {
         // Save associated field.
         if (!empty($this->field->param4) && !empty($usernew->{$this->inputname})) {
             $usernew->{$this->field->param4} = $this->display_data();
-            user_update_user($usernew, false, false);
+            if (class_exists('\core\user') && method_exists('\core\user', 'update_user')) {
+                \core\user::update_user($usernew, false, false);
+            } else {
+                user_update_user($usernew, false, false);
+            }
         }
     }
 
